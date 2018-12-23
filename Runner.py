@@ -6,6 +6,7 @@ from Config import FITOPTS
 from Config import PATIENCE
 from Config import OPTIMIZER
 from Config import BATCHSIZE
+from Config import STEPS_PER
 from Config import FITGENOPTS
 from Config import TOP_K_ACCU
 
@@ -73,7 +74,7 @@ def Run(rpt: Report, bld: str, n_cls: int, shape: tuple, db_opt: dict, bld_opt: 
 
     schema.model.compile(loss=loss, optimizer=OPTIMIZER, metrics=metrics)
 
-    history = fitModel(schema, n_cls, dgen_opt, datagen,
+    history = fitModel(schema, n_cls, dgen_opt, datagen, shot,
                        X_train, X_valid, y_train, y_valid, aug_flag)
     save_history(history, title)
     save_weights(schema.model, title)
@@ -216,7 +217,7 @@ def getFeatures(model, X):
     return features
 
 
-def fitModel(schema, n_cls, dgen_opt, datagen,
+def fitModel(schema, n_cls, dgen_opt, datagen, shot,
              X_train, X_valid, y_train, y_valid, aug_flag):
     callbacks = [EarlyStopping(patience=PATIENCE),
                  TerminateOnNaN()]
@@ -242,8 +243,12 @@ def fitModel(schema, n_cls, dgen_opt, datagen,
             traingen = datagen(X_train, y_train, n_cls, BATCHSIZE)
             validgen = datagen(X_valid, y_valid, n_cls, BATCHSIZE)
 
-    history = schema.model.fit_generator(traingen, validation_data=validgen,
-                                         callbacks=callbacks, **FITGENOPTS)
+    _STEPS_PER = dict(STEPS_PER)
+    if shot == None:
+        _STEPS_PER['steps_per_epoch'] = len(y_train)//BATCHSIZE
+        _STEPS_PER['validation_steps'] = len(y_valid)//BATCHSIZE
+    history = schema.model.fit_generator(
+        traingen, validation_data=validgen, callbacks=callbacks, **FITGENOPTS, **_STEPS_PER)
     history.history.update({'params': history.params})
     history.history.update({'epoch': history.epoch})
     return history.history

@@ -12,6 +12,8 @@ FITGENOPTS = {
     'epochs': __EPOCHS,
     'verbose': __VERBOSE,
     'max_queue_size': 80,
+}
+STEPS_PER = {
     'steps_per_epoch': 250,
     'validation_steps': 50,
 }
