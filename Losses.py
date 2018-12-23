@@ -76,7 +76,6 @@ def my_loss_v1(**kwargs):
         true_p = y_true[:, n_cls:(n_cls*2)]
         true_n = y_true[:, (n_cls*2):(n_cls*3)]
 
-        zero = K.constant(0, dtype=K.floatx())
         one = K.constant(1, dtype=K.floatx())
 
         def __loss(anc, pos, neg):
@@ -88,15 +87,13 @@ def my_loss_v1(**kwargs):
             neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
                 Metrics.kullback_leibler(neg, anc)
 
+            pos_dist = pos_dist_l2 + pos_dist_kl
+            neg_dist = neg_dist_l2 + neg_dist_kl
+
             _loss = \
-                Metrics.entropy(K.tanh(pos_dist_kl)) +\
-                Metrics.entropy(K.tanh(neg_dist_kl)) +\
-                Metrics.entropy(K.tanh(pos_dist_l2)) +\
-                Metrics.entropy(K.tanh(neg_dist_l2)) +\
-                Metrics.cross_entropy(zero, K.tanh(pos_dist_kl)) +\
-                Metrics.cross_entropy(one, K.tanh(neg_dist_kl)) +\
-                Metrics.cross_entropy(zero, K.tanh(pos_dist_l2)) +\
-                Metrics.cross_entropy(one, K.tanh(neg_dist_l2))
+                K.sigmoid(pos_dist - neg_dist) +\
+                Metrics.cross_entropy(one, K.tanh(neg_dist)) +\
+                Metrics.cross_entropy(one, -K.tanh(-pos_dist))
             return _loss
 
         loss = 0
@@ -123,7 +120,6 @@ def my_loss_v2(**kwargs):
             embed_n = y_pred[:, (_len+(e_len[i]*2)):(_len+(e_len[i]*3))]
             embeds_apn.append((embed_a, embed_p, embed_n))
 
-        zero = K.constant(0, dtype=K.floatx())
         one = K.constant(1, dtype=K.floatx())
 
         def __loss(anc, pos, neg):
@@ -135,15 +131,13 @@ def my_loss_v2(**kwargs):
             neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
                 Metrics.kullback_leibler(neg, anc)
 
+            pos_dist = pos_dist_l2 + pos_dist_kl
+            neg_dist = neg_dist_l2 + neg_dist_kl
+
             _loss = \
-                Metrics.entropy(K.tanh(pos_dist_kl)) +\
-                Metrics.entropy(K.tanh(neg_dist_kl)) +\
-                Metrics.entropy(K.tanh(pos_dist_l2)) +\
-                Metrics.entropy(K.tanh(neg_dist_l2)) +\
-                Metrics.cross_entropy(zero, K.tanh(pos_dist_kl)) +\
-                Metrics.cross_entropy(one, K.tanh(neg_dist_kl)) +\
-                Metrics.cross_entropy(zero, K.tanh(pos_dist_l2)) +\
-                Metrics.cross_entropy(one, K.tanh(neg_dist_l2))
+                K.sigmoid(pos_dist - neg_dist) +\
+                Metrics.cross_entropy(one, K.tanh(neg_dist)) +\
+                Metrics.cross_entropy(one, -K.tanh(-pos_dist))
             return _loss
 
         loss = 0

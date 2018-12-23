@@ -1,3 +1,4 @@
+from tensorflow.keras import optimizers
 
 TOP_K_ACCU = [1, 3, 5]
 
@@ -6,7 +7,7 @@ __EPOCHS = 1000
 
 PATIENCE = 20
 BATCHSIZE = 32
-OPTIMIZER = 'adam'
+OPTIMIZER = optimizers.SGD(lr=0.01, decay=1e-6)
 FITGENOPTS = {
     'workers': 8,
     'epochs': __EPOCHS,
@@ -163,20 +164,20 @@ METHODS = {
         'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
         'svm': __SVMS,
     },
-    # 'MyModelV3': {
-    #     'loss': 'L-my_loss_v2',
-    #     'metrics': [],
-    #     'datagen': 'MyTriplet',
-    #     'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
-    #     'svm': __SVMS,
-    # },
-    # 'MyModelV4': {
-    #     'loss': 'L-my_loss_v2',
-    #     'metrics': [],
-    #     'datagen': 'MyTriplet',
-    #     'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
-    #     'svm': __SVMS,
-    # },
+    'MyModelV3': {
+        'loss': 'L-my_loss_v2',
+        'metrics': [],
+        'datagen': 'MyTriplet',
+        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
+        'svm': __SVMS,
+    },
+    'MyModelV4': {
+        'loss': 'L-my_loss_v2',
+        'metrics': [],
+        'datagen': 'MyTriplet',
+        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
+        'svm': __SVMS,
+    },
     'SiameseV1': {
         'loss': 'K-binary_crossentropy',
         'metrics': [],
