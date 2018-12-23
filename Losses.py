@@ -51,7 +51,7 @@ def triplet(alpha=0.2, **kwargs):
     return _loss
 
 
-def my_loss(**kwargs):
+def my_loss_v1(**kwargs):
     n_cls = kwargs['n_cls']
     e_len = kwargs['e_len']
 
@@ -106,6 +106,49 @@ def my_loss(**kwargs):
             Metrics.cross_entropy(true_a, output_a) +\
             Metrics.cross_entropy(true_p, output_p) +\
             Metrics.cross_entropy(true_n, output_n)
+        return loss
+
+    return _loss
+
+
+def my_loss_v2(**kwargs):
+    e_len = kwargs['e_len']
+
+    def _loss(y_true, y_pred):
+        embeds_apn = []
+        for i in range(len(e_len)):
+            _len = i*(e_len[i]*3)
+            embed_a = y_pred[:, _len:(_len+e_len[i])]
+            embed_p = y_pred[:, (_len+e_len[i]):(_len+(e_len[i]*2))]
+            embed_n = y_pred[:, (_len+(e_len[i]*2)):(_len+(e_len[i]*3))]
+            embeds_apn.append((embed_a, embed_p, embed_n))
+
+        zero = K.constant(0, dtype=K.floatx())
+        one = K.constant(1, dtype=K.floatx())
+
+        def __loss(anc, pos, neg):
+            pos_dist_l2 = Metrics.squared_l2_distance(anc, pos)
+            neg_dist_l2 = Metrics.squared_l2_distance(anc, neg)
+
+            pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
+                Metrics.kullback_leibler(pos, anc)
+            neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
+                Metrics.kullback_leibler(neg, anc)
+
+            _loss = \
+                Metrics.entropy(K.tanh(pos_dist_kl)) +\
+                Metrics.entropy(K.tanh(neg_dist_kl)) +\
+                Metrics.entropy(K.tanh(pos_dist_l2)) +\
+                Metrics.entropy(K.tanh(neg_dist_l2)) +\
+                Metrics.cross_entropy(zero, K.tanh(pos_dist_kl)) +\
+                Metrics.cross_entropy(one, K.tanh(neg_dist_kl)) +\
+                Metrics.cross_entropy(zero, K.tanh(pos_dist_l2)) +\
+                Metrics.cross_entropy(one, K.tanh(neg_dist_l2))
+            return _loss
+
+        loss = 0
+        for i in range(len(e_len)):
+            loss += __loss(*embeds_apn[i])
         return loss
 
     return _loss

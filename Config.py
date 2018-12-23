@@ -146,19 +146,33 @@ METHODS = {
     #     'svm': __SVMS,
     # },
     'MyModelV1': {
-        'loss': 'L-my_loss',
+        'loss': 'L-my_loss_v1',
         'metrics': ['L-my_accu'],
         'datagen': 'MyTriplet',
         'classification': '',
-        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}), # , 'correlation'
+        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
         'svm': __SVMS,
     },
     'MyModelV2': {
-        'loss': 'L-my_loss',
+        'loss': 'L-my_loss_v1',
         'metrics': ['L-my_accu'],
         'datagen': 'MyTriplet',
         'classification': '',
-        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}), # , 'correlation'
+        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
+        'svm': __SVMS,
+    },
+    'MyModelV3': {
+        'loss': 'L-my_loss_v2',
+        'metrics': [],
+        'datagen': 'MyTriplet',
+        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
+        'svm': __SVMS,
+    },
+    'MyModelV4': {
+        'loss': 'L-my_loss_v2',
+        'metrics': [],
+        'datagen': 'MyTriplet',
+        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
         'svm': __SVMS,
     },
     'SiameseV1': {
