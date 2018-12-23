@@ -2,7 +2,7 @@
 TOP_K_ACCU = [1, 3, 5]
 
 __VERBOSE = 2
-__EPOCHS = 700
+__EPOCHS = 1000
 
 PATIENCE = 10
 BATCHSIZE = 32
@@ -12,7 +12,7 @@ FITGENOPTS = {
     'epochs': __EPOCHS,
     'verbose': __VERBOSE,
     'max_queue_size': 80,
-    'steps_per_epoch': 1000,
+    'steps_per_epoch': 800,
     'validation_steps': 200,
 }
 FITOPTS = {
