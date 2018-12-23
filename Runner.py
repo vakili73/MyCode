@@ -103,7 +103,7 @@ def Run(rpt: Report, bld: str, n_cls: int, shape: tuple, db_opt: dict, bld_opt: 
                         embed_feature[i], y_train, y_test, n_cls, title+'_'+str(i))
     else:
         knn_opt = getKnnOpts(bld, knn_opt)
-        if isinstance(knn_opt, list):
+        if isinstance(knn_opt, tuple):
             for i in range(len(knn_opt)):
                 rpt.write_text('knn_metrics').flush()
                 Run_KNN(rpt, knn_opt[i], embed_feature_train,
@@ -175,7 +175,7 @@ def getKnnOpts(bld: str, knn_opt: dict):
                 _knn_opt.append(_temp)
     else:
         return knn_opt
-    return _knn_opt
+    return tuple(_knn_opt)
 
 
 def getMetricArgs(bld: str, n_cls, schema):
