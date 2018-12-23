@@ -320,8 +320,7 @@ class SchemaV02(BaseSchema):
         model.add(layers.Activation('relu'))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer05 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer05 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Conv2D(128, (3, 3),
                                 kernel_regularizer=l2(0.01)))
@@ -329,8 +328,7 @@ class SchemaV02(BaseSchema):
         model.add(layers.Activation('relu'))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer04 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer04 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Conv2D(128, (3, 3),
                                 kernel_regularizer=l2(0.01)))
@@ -459,8 +457,7 @@ class SchemaV02(BaseSchema):
         model.add(layers.Activation('relu'))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer05 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer05 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Conv2D(128, (3, 3),
                                 kernel_regularizer=l2(0.01)))
@@ -468,8 +465,7 @@ class SchemaV02(BaseSchema):
         model.add(layers.Activation('relu'))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer04 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer04 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Conv2D(128, (3, 3),
                                 kernel_regularizer=l2(0.01)))

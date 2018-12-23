@@ -74,8 +74,7 @@ class SchemaV01(BaseSchema):
                 output_shape=output_shape)
             distance = distance_layer([embedded_1, embedded_2])
 
-        prediction = layers.Dense(1, activation='sigmoid',
-                                  kernel_regularizer=l2(0.01))(distance)
+        prediction = layers.Dense(1, activation='sigmoid')(distance)
 
         self.model = Model(inputs=[input_1, input_2], outputs=prediction)
         return self
@@ -267,8 +266,7 @@ class SchemaV01(BaseSchema):
         model.add(layers.Activation('relu'))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer02 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer02 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Flatten())
         model.add(layers.Dense(128, activation='sigmoid',
@@ -345,8 +343,7 @@ class SchemaV01(BaseSchema):
         model.add(layers.Activation('relu'))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer02 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer02 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Flatten())
         model.add(layers.Dense(128, activation='sigmoid',

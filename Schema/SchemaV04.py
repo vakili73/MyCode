@@ -294,8 +294,7 @@ class SchemaV04(BaseSchema):
                                 kernel_regularizer=l2(0.01)))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer05 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer05 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Conv2D(64, (5, 5),
                                 kernel_regularizer=l2(0.01)))
@@ -305,8 +304,7 @@ class SchemaV04(BaseSchema):
                                 kernel_regularizer=l2(0.01)))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer04 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer04 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Conv2D(32, (3, 3),
                                 kernel_regularizer=l2(0.01)))
@@ -317,8 +315,7 @@ class SchemaV04(BaseSchema):
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
         model.add(layers.Flatten())
-        layer03 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(model.output)
+        layer03 = layers.Dense(128, activation='sigmoid')(model.output)
         model.add(layers.Dense(512, activation='sigmoid',
                                kernel_regularizer=l2(0.01)))
         model.add(layers.Dropout(0.5))
@@ -423,8 +420,7 @@ class SchemaV04(BaseSchema):
                                 kernel_regularizer=l2(0.01)))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer05 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer05 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Conv2D(64, (5, 5),
                                 kernel_regularizer=l2(0.01)))
@@ -434,8 +430,7 @@ class SchemaV04(BaseSchema):
                                 kernel_regularizer=l2(0.01)))
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
-        layer04 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(
+        layer04 = layers.Dense(128, activation='sigmoid')(
             layers.Flatten()(model.output))
         model.add(layers.Conv2D(32, (3, 3),
                                 kernel_regularizer=l2(0.01)))
@@ -446,8 +441,7 @@ class SchemaV04(BaseSchema):
         model.add(layers.MaxPooling2D())
         model.add(layers.Dropout(0.25))
         model.add(layers.Flatten())
-        layer03 = layers.Dense(128, activation='sigmoid',
-                               kernel_regularizer=l2(0.01))(model.output)
+        layer03 = layers.Dense(128, activation='sigmoid')(model.output)
         model.add(layers.Dense(512, activation='sigmoid',
                                kernel_regularizer=l2(0.01)))
         model.add(layers.Dropout(0.5))
