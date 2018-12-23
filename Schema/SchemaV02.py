@@ -406,6 +406,137 @@ class SchemaV02(BaseSchema):
             inputs=[input_a, input_p, input_n], outputs=concat)
         return self
 
+    def buildMyModelV3(self, shape, n_cls):
+        model = self.build(shape)
+        model.add(layers.Dense(512, activation='sigmoid',
+                               kernel_regularizer=l2(0.01)))
+        model.add(layers.Dropout(0.25))
+        layer03 = model.output
+        model.add(layers.Dense(256, activation='sigmoid',
+                               kernel_regularizer=l2(0.01)))
+        model.add(layers.Dropout(0.25))
+        layer02 = model.output
+        model.add(layers.Dense(128, activation='sigmoid',
+                               kernel_regularizer=l2(0.01)))
+
+        self.e_len = [512, 256, 128]
+        self.input = model.input
+        self.output = model.output
+
+        input_a = layers.Input(shape=shape)
+        input_p = layers.Input(shape=shape)
+        input_n = layers.Input(shape=shape)
+
+        layer03_model = Model(inputs=model.input, outputs=layer03)
+        layer03_a = layer03_model(input_a)
+        layer03_p = layer03_model(input_p)
+        layer03_n = layer03_model(input_n)
+
+        layer02_model = Model(inputs=model.input, outputs=layer02)
+        layer02_a = layer02_model(input_a)
+        layer02_p = layer02_model(input_p)
+        layer02_n = layer02_model(input_n)
+
+        embed_model = Model(inputs=model.input, outputs=model.output)
+        embed_a = embed_model(input_a)
+        embed_p = embed_model(input_p)
+        embed_n = embed_model(input_n)
+
+        concat = layers.Concatenate()(
+            [layer03_a, layer03_p, layer03_n,
+             layer02_a, layer02_p, layer02_n,
+             embed_a, embed_p, embed_n])
+
+        self.model = Model(
+            inputs=[input_a, input_p, input_n], outputs=concat)
+        return self
+
+    def buildMyModelV4(self, shape, n_cls):
+        model = Sequential()
+        model.add(layers.Conv2D(256, (3, 3), input_shape=shape,
+                                kernel_regularizer=l2(0.01)))
+        model.add(layers.BatchNormalization())
+        model.add(layers.Activation('relu'))
+        model.add(layers.MaxPooling2D())
+        model.add(layers.Dropout(0.25))
+        layer05 = layers.Dense(128, activation='sigmoid',
+                               kernel_regularizer=l2(0.01))(
+            layers.Flatten()(model.output))
+        model.add(layers.Conv2D(128, (3, 3),
+                                kernel_regularizer=l2(0.01)))
+        model.add(layers.BatchNormalization())
+        model.add(layers.Activation('relu'))
+        model.add(layers.MaxPooling2D())
+        model.add(layers.Dropout(0.25))
+        layer04 = layers.Dense(128, activation='sigmoid',
+                               kernel_regularizer=l2(0.01))(
+            layers.Flatten()(model.output))
+        model.add(layers.Conv2D(128, (3, 3),
+                                kernel_regularizer=l2(0.01)))
+        model.add(layers.BatchNormalization())
+        model.add(layers.Activation('relu'))
+        model.add(layers.Dropout(0.25))
+        model.add(layers.Conv2D(64, (3, 3),
+                                kernel_regularizer=l2(0.01)))
+        model.add(layers.BatchNormalization())
+        model.add(layers.Activation('relu'))
+        model.add(layers.Dropout(0.25))
+        model.add(layers.Flatten())
+        model.add(layers.Dense(512, activation='sigmoid',
+                               kernel_regularizer=l2(0.01)))
+        model.add(layers.Dropout(0.25))
+        layer03 = model.output
+        model.add(layers.Dense(256, activation='sigmoid',
+                               kernel_regularizer=l2(0.01)))
+        model.add(layers.Dropout(0.25))
+        layer02 = model.output
+        model.add(layers.Dense(128, activation='sigmoid',
+                               kernel_regularizer=l2(0.01)))
+
+        self.e_len = [128, 128, 512, 256, 128]
+        self.input = model.input
+        self.output = model.output
+
+        input_a = layers.Input(shape=shape)
+        input_p = layers.Input(shape=shape)
+        input_n = layers.Input(shape=shape)
+
+        layer05_model = Model(inputs=model.input, outputs=layer05)
+        layer05_a = layer05_model(input_a)
+        layer05_p = layer05_model(input_p)
+        layer05_n = layer05_model(input_n)
+
+        layer04_model = Model(inputs=model.input, outputs=layer04)
+        layer04_a = layer04_model(input_a)
+        layer04_p = layer04_model(input_p)
+        layer04_n = layer04_model(input_n)
+
+        layer03_model = Model(inputs=model.input, outputs=layer03)
+        layer03_a = layer03_model(input_a)
+        layer03_p = layer03_model(input_p)
+        layer03_n = layer03_model(input_n)
+
+        layer02_model = Model(inputs=model.input, outputs=layer02)
+        layer02_a = layer02_model(input_a)
+        layer02_p = layer02_model(input_p)
+        layer02_n = layer02_model(input_n)
+
+        embed_model = Model(inputs=model.input, outputs=model.output)
+        embed_a = embed_model(input_a)
+        embed_p = embed_model(input_p)
+        embed_n = embed_model(input_n)
+
+        concat = layers.Concatenate()(
+            [layer05_a, layer05_p, layer05_n,
+             layer04_a, layer04_p, layer04_n,
+             layer03_a, layer03_p, layer03_n,
+             layer02_a, layer02_p, layer02_n,
+             embed_a, embed_p, embed_n])
+
+        self.model = Model(
+            inputs=[input_a, input_p, input_n], outputs=concat)
+        return self
+
     def build(self, shape):
         """
         [1] https://github.com/ajgallego/Clustering-based-k-Nearest-Neighbor/blob/master/utilKerasModels.py
