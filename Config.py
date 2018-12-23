@@ -4,7 +4,7 @@ TOP_K_ACCU = [1, 3, 5]
 __VERBOSE = 2
 __EPOCHS = 1000
 
-PATIENCE = 10
+PATIENCE = 20
 BATCHSIZE = 32
 OPTIMIZER = 'adam'
 FITGENOPTS = {
@@ -12,8 +12,8 @@ FITGENOPTS = {
     'epochs': __EPOCHS,
     'verbose': __VERBOSE,
     'max_queue_size': 80,
-    'steps_per_epoch': 800,
-    'validation_steps': 200,
+    'steps_per_epoch': 250,
+    'validation_steps': 50,
 }
 FITOPTS = {
     'epochs': __EPOCHS,
