@@ -15,7 +15,7 @@ FITGENOPTS = {
     'max_queue_size': 80,
 }
 STEPS_PER = {
-    'steps_per_epoch': 250,
+    'steps_per_epoch': 200,
     'validation_steps': 50,
 }
 FITOPTS = {
