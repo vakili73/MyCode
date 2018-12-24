@@ -3,7 +3,7 @@ from tensorflow.keras import optimizers
 TOP_K_ACCU = [1, 3, 5]
 
 __VERBOSE = 2
-__EPOCHS = 10000
+__EPOCHS = 9999
 
 PATIENCE = 20
 BATCHSIZE = 32
