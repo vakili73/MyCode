@@ -34,7 +34,7 @@ from sklearn.metrics import precision_recall_fscore_support
 from scipy.spatial.distance import cosine
 
 from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.callbacks import TensorBoard
+# from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.callbacks import TerminateOnNaN
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -221,8 +221,8 @@ def getFeatures(model, X):
 
 def fitModel(schema, n_cls, dgen_opt, datagen, shot,
              X_train, X_valid, y_train, y_valid, aug_flag):
-    callbacks = [EarlyStopping(patience=PATIENCE), TerminateOnNaN(),
-                 TensorBoard(log_dir='./logs/tboard', histogram_freq=1, write_grads=True)]
+    callbacks = [EarlyStopping(patience=PATIENCE), TerminateOnNaN()] #,
+                #  TensorBoard(log_dir='./logs/tboard', histogram_freq=1, write_grads=True)]
     if 'Original' == datagen:
         if aug_flag:
             datagen = ImageDataGenerator(**dgen_opt)
