@@ -76,7 +76,7 @@ def my_loss_v1(**kwargs):
         true_p = y_true[:, n_cls:(n_cls*2)]
         true_n = y_true[:, (n_cls*2):(n_cls*3)]
 
-        one = K.constant(1, dtype=K.floatx())
+        # one = K.constant(1.0, dtype=K.floatx())
 
         def __loss(anc, pos, neg):
             pos_dist_l2 = Metrics.squared_l2_distance(anc, pos)
@@ -91,9 +91,8 @@ def my_loss_v1(**kwargs):
             neg_dist = neg_dist_l2 + neg_dist_kl
 
             _loss = \
-                K.sigmoid(pos_dist - neg_dist) +\
-                Metrics.cross_entropy(one, K.tanh(neg_dist)) +\
-                Metrics.cross_entropy(one, -K.tanh(-pos_dist))
+                K.sigmoid(pos_dist - neg_dist) #+\
+                # Metrics.cross_entropy(one, K.sigmoid(neg_dist))
             return _loss
 
         loss = 0
@@ -120,7 +119,7 @@ def my_loss_v2(**kwargs):
             embed_n = y_pred[:, (_len+(e_len[i]*2)):(_len+(e_len[i]*3))]
             embeds_apn.append((embed_a, embed_p, embed_n))
 
-        one = K.constant(1, dtype=K.floatx())
+        # one = K.constant(1, dtype=K.floatx())
 
         def __loss(anc, pos, neg):
             pos_dist_l2 = Metrics.squared_l2_distance(anc, pos)
@@ -135,9 +134,8 @@ def my_loss_v2(**kwargs):
             neg_dist = neg_dist_l2 + neg_dist_kl
 
             _loss = \
-                K.sigmoid(pos_dist - neg_dist) +\
-                Metrics.cross_entropy(one, K.tanh(neg_dist)) +\
-                Metrics.cross_entropy(one, -K.tanh(-pos_dist))
+                K.sigmoid(pos_dist - neg_dist) #+\
+                # Metrics.cross_entropy(one, K.sigmoid(neg_dist))
             return _loss
 
         loss = 0
