@@ -222,7 +222,7 @@ def getFeatures(model, X):
 def fitModel(schema, n_cls, dgen_opt, datagen, shot,
              X_train, X_valid, y_train, y_valid, aug_flag):
     callbacks = [EarlyStopping(patience=PATIENCE), TerminateOnNaN(),
-                 TensorBoard(log_dir='./logs/tboard', write_grads=True)]
+                 TensorBoard(log_dir='./logs/tboard', histogram_freq=1, write_grads=True)]
     if 'Original' == datagen:
         if aug_flag:
             datagen = ImageDataGenerator(**dgen_opt)
