@@ -1,4 +1,4 @@
-
+import numpy as np
 from Runner import Run
 from Reporter import Report
 
@@ -19,6 +19,8 @@ from tensorflow.keras import backend as K
 
 # %% Main Program
 if __name__ == "__main__":
+
+    np.random.seed(0)
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
