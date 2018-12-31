@@ -163,13 +163,13 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    'MyModelV3': {
-        'loss': 'L-my_loss_v2',
-        'metrics': [],
-        'datagen': 'MyTriplet',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'MyModelV3': {
+    #     'loss': 'L-my_loss_v2',
+    #     'metrics': [],
+    #     'datagen': 'MyTriplet',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'MyModelV4': {
     #     'loss': 'L-my_loss_v2',
     #     'metrics': [],
