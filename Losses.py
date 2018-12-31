@@ -84,10 +84,10 @@ def my_loss_v1(**kwargs):
             Annals of Mathematical Statistics. 22 (1): 79–86.
             doi:10.1214/aoms/1177729694. MR 0039968.
             """
-            pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
-                Metrics.kullback_leibler(pos, anc)
-            neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
-                Metrics.kullback_leibler(neg, anc)
+            # pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
+            #     Metrics.kullback_leibler(pos, anc)
+            # neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
+            #     Metrics.kullback_leibler(neg, anc)
 
             """
             Squared Jensen-Shannon distance
@@ -106,8 +106,8 @@ def my_loss_v1(**kwargs):
             in Hazewinkel, Michiel, Encyclopedia of Mathematics, Springer Science+Business Media B.V.
             Kluwer Academic Publishers, ISBN 978-1-55608-010-4
             """
-            pos_dist_hl = Metrics.squared_hellinger(anc, pos)
-            neg_dist_hl = Metrics.squared_hellinger(anc, neg)
+            # pos_dist_hl = Metrics.squared_hellinger(anc, pos)
+            # neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
             pos_dist = (1.0/2.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_js))
             neg_dist = (1.0/2.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_js))
@@ -153,10 +153,10 @@ def my_loss_v2(**kwargs):
             Annals of Mathematical Statistics. 22 (1): 79–86.
             doi:10.1214/aoms/1177729694. MR 0039968.
             """
-            pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
-                Metrics.kullback_leibler(pos, anc)
-            neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
-                Metrics.kullback_leibler(neg, anc)
+            # pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
+            #     Metrics.kullback_leibler(pos, anc)
+            # neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
+            #     Metrics.kullback_leibler(neg, anc)
 
             """
             Squared Jensen-Shannon distance
@@ -175,11 +175,11 @@ def my_loss_v2(**kwargs):
             in Hazewinkel, Michiel, Encyclopedia of Mathematics, Springer Science+Business Media B.V.
             Kluwer Academic Publishers, ISBN 978-1-55608-010-4
             """
-            pos_dist_hl = Metrics.squared_hellinger(anc, pos)
-            neg_dist_hl = Metrics.squared_hellinger(anc, neg)
+            # pos_dist_hl = Metrics.squared_hellinger(anc, pos)
+            # neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
-            pos_dist = (1.0/3.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_kl) + K.tanh(pos_dist_js))
-            neg_dist = (1.0/3.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_kl) + K.tanh(neg_dist_js))
+            pos_dist = (1.0/2.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_js))
+            neg_dist = (1.0/2.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_js))
 
             _loss = \
                 - ((1.0-neg_dist)*K.log(K.maximum(1.0-pos_dist, K.epsilon())) +
