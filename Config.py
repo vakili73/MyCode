@@ -1,13 +1,12 @@
-from tensorflow.keras import optimizers
 
-TOP_K_ACCU = [1, 3, 5]
+TOP_K_ACCU = [1, 5]
 
 __VERBOSE = 2
 __EPOCHS = 9999
 
 PATIENCE = 20
 BATCHSIZE = 32
-OPTIMIZER = optimizers.SGD(lr=0.01, decay=1e-6)
+OPTIMIZER = 'adam'
 FITGENOPTS = {
     'workers': 8,
     'epochs': __EPOCHS,
@@ -24,7 +23,7 @@ FITOPTS = {
     'batch_size': BATCHSIZE,
 }
 
-__SHOTS = [5, 10, 20, 50, None]
+__SHOTS = [50, None]
 
 __DATAGEN_OPT_COLORED_IMAGE = {
     'rotation_range': 20,
@@ -72,11 +71,11 @@ DATASETS = {
         "shots": __SHOTS,
         "dgen_opt": __DATAGEN_OPT_B_AND_W_IMAGE,
     },
-    "mingnet": {
-        "schema": 'V04',
-        "shots": __SHOTS,
-        "dgen_opt": __DATAGEN_OPT_COLORED_IMAGE,
-    },
+    # "mingnet": {
+    #     "schema": 'V04',
+    #     "shots": __SHOTS,
+    #     "dgen_opt": __DATAGEN_OPT_COLORED_IMAGE,
+    # },
     "mnist": {
         "schema": 'V01',
         "shots": __SHOTS,
@@ -87,11 +86,11 @@ DATASETS = {
         "shots": __SHOTS,
         "dgen_opt": __DATAGEN_OPT_B_AND_W_IMAGE,
     },
-    "omniglot": {
-        "schema": 'V01',
-        "shots": [5, 10, None],
-        "dgen_opt": __DATAGEN_OPT_B_AND_W_IMAGE,
-    },
+    # "omniglot": {
+    #     "schema": 'V01',
+    #     "shots": [None],
+    #     "dgen_opt": __DATAGEN_OPT_B_AND_W_IMAGE,
+    # },
     "stl10": {
         "schema": 'V04',
         "shots": __SHOTS,
@@ -127,8 +126,8 @@ __SVMS = [
      'gamma': 'scale', },
     # {'kernel': 'poly',
     #  'gamma': 'scale', },
-    {'kernel': 'sigmoid',
-     'gamma': 'scale', },
+    # {'kernel': 'sigmoid',
+    #  'gamma': 'scale', },
 ]
 
 METHODS = {
@@ -152,30 +151,30 @@ METHODS = {
         'loss': 'L-my_loss_v1',
         'metrics': ['L-my_accu'],
         'datagen': 'MyTriplet',
-        'classification': '',
-        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
+        'classification': 'getClfModel',
+        'knn': __KNNS,
         'svm': __SVMS,
     },
     'MyModelV2': {
         'loss': 'L-my_loss_v1',
         'metrics': ['L-my_accu'],
         'datagen': 'MyTriplet',
-        'classification': '',
-        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
+        'classification': 'getClfModel',
+        'knn': __KNNS,
         'svm': __SVMS,
     },
     'MyModelV3': {
         'loss': 'L-my_loss_v2',
         'metrics': [],
         'datagen': 'MyTriplet',
-        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
+        'knn': __KNNS,
         'svm': __SVMS,
     },
     'MyModelV4': {
         'loss': 'L-my_loss_v2',
         'metrics': [],
         'datagen': 'MyTriplet',
-        'knn': (__KNNS, {'metric': ['cosine', 'kullbackleibler']}),
+        'knn': __KNNS,
         'svm': __SVMS,
     },
     'SiameseV1': {

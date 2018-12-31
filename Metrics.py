@@ -18,7 +18,7 @@ def top_k_accuracy(y_score, y_true, k=5):
 def my_accu(**kwargs):
     n_cls = kwargs['n_cls']
     e_len = kwargs['e_len']
-    
+
     def my_accu(y_true, y_pred):
         out_len = 0
         for i in range(len(e_len)):
@@ -43,6 +43,17 @@ def kullback_leibler(tensor_a, tensor_b):
     tensor_a = K.clip(tensor_a, K.epsilon(), 1.0)
     tensor_b = K.clip(tensor_b, K.epsilon(), 1.0)
     return K.sum(tensor_a * K.log(tensor_a / tensor_b), axis=-1)
+
+
+def jensen_shannon(tensor_a, tensor_b):
+    tensor_m = 0.5 * (tensor_a + tensor_b)
+    return 0.5 * (kullback_leibler(tensor_a, tensor_m) +
+                  kullback_leibler(tensor_b, tensor_m))
+
+
+def squared_hellinger(tensor_a, tensor_b):
+    tensor_m = K.sum(K.sqrt(tensor_a * tensor_b), axis=-1)
+    return 1.0 - tensor_m
 
 
 def entropy(tensor):

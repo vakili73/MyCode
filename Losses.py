@@ -73,23 +73,48 @@ def my_loss_v1(**kwargs):
         true_p = y_true[:, n_cls:(n_cls*2)]
         true_n = y_true[:, (n_cls*2):(n_cls*3)]
 
-        # one = K.constant(1.0, dtype=K.floatx())
-
         def __loss(anc, pos, neg):
             pos_dist_l2 = Metrics.squared_l2_distance(anc, pos)
             neg_dist_l2 = Metrics.squared_l2_distance(anc, neg)
 
+            """
+            Symmetrised Kullback and Leibler
+            Kullback, S.; Leibler, R.A. (1951).
+            "On information and sufficiency".
+            Annals of Mathematical Statistics. 22 (1): 79–86.
+            doi:10.1214/aoms/1177729694. MR 0039968.
+            """
             pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
                 Metrics.kullback_leibler(pos, anc)
             neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
                 Metrics.kullback_leibler(neg, anc)
 
-            pos_dist = pos_dist_l2 + pos_dist_kl
-            neg_dist = neg_dist_l2 + neg_dist_kl
+            """
+            Squared Jensen-Shannon distance
+            Endres, D. M.; J. E. Schindelin (2003).
+            "A new metric for probability distributions".
+            IEEE Trans. Inf. Theory. 49 (7): 1858–1860.
+            doi:10.1109/TIT.2003.813506.
+            """
+            pos_dist_js = K.sqrt(Metrics.jensen_shannon(anc, pos))
+            neg_dist_js = K.sqrt(Metrics.jensen_shannon(anc, neg))
+
+            """
+            Squared Hellinger distance
+            Nikulin, M.S.
+            (2001) [1994], "Hellinger distance"
+            in Hazewinkel, Michiel, Encyclopedia of Mathematics, Springer Science+Business Media B.V.
+            Kluwer Academic Publishers, ISBN 978-1-55608-010-4
+            """
+            pos_dist_hl = Metrics.squared_hellinger(anc, pos)
+            neg_dist_hl = Metrics.squared_hellinger(anc, neg)
+
+            pos_dist = (1.0/4.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_kl) + K.tanh(pos_dist_js) + K.tanh(pos_dist_hl))
+            neg_dist = (1.0/4.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_kl) + K.tanh(neg_dist_js) + K.tanh(neg_dist_hl))
 
             _loss = \
-                K.sigmoid(pos_dist - neg_dist) #+\
-                # Metrics.cross_entropy(one, K.sigmoid(neg_dist))
+                - ((1.0-neg_dist)*K.log(K.maximum(1.0-pos_dist, K.epsilon())) +
+                   (pos_dist)*K.log(K.maximum(neg_dist, K.epsilon())))
             return _loss
 
         loss = 0
@@ -117,23 +142,48 @@ def my_loss_v2(**kwargs):
             embeds_apn.append((embed_a, embed_p, embed_n))
             _len += e_len[i]*3
 
-        # one = K.constant(1, dtype=K.floatx())
-
         def __loss(anc, pos, neg):
             pos_dist_l2 = Metrics.squared_l2_distance(anc, pos)
             neg_dist_l2 = Metrics.squared_l2_distance(anc, neg)
 
+            """
+            Symmetrised Kullback and Leibler
+            Kullback, S.; Leibler, R.A. (1951).
+            "On information and sufficiency".
+            Annals of Mathematical Statistics. 22 (1): 79–86.
+            doi:10.1214/aoms/1177729694. MR 0039968.
+            """
             pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
                 Metrics.kullback_leibler(pos, anc)
             neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
                 Metrics.kullback_leibler(neg, anc)
 
-            pos_dist = pos_dist_l2 + pos_dist_kl
-            neg_dist = neg_dist_l2 + neg_dist_kl
+            """
+            Squared Jensen-Shannon distance
+            Endres, D. M.; J. E. Schindelin (2003).
+            "A new metric for probability distributions".
+            IEEE Trans. Inf. Theory. 49 (7): 1858–1860.
+            doi:10.1109/TIT.2003.813506.
+            """
+            pos_dist_js = K.sqrt(Metrics.jensen_shannon(anc, pos))
+            neg_dist_js = K.sqrt(Metrics.jensen_shannon(anc, neg))
+
+            """
+            Squared Hellinger distance
+            Nikulin, M.S.
+            (2001) [1994], "Hellinger distance"
+            in Hazewinkel, Michiel, Encyclopedia of Mathematics, Springer Science+Business Media B.V.
+            Kluwer Academic Publishers, ISBN 978-1-55608-010-4
+            """
+            pos_dist_hl = Metrics.squared_hellinger(anc, pos)
+            neg_dist_hl = Metrics.squared_hellinger(anc, neg)
+
+            pos_dist = (1.0/4.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_kl) + K.tanh(pos_dist_js) + K.tanh(pos_dist_hl))
+            neg_dist = (1.0/4.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_kl) + K.tanh(neg_dist_js) + K.tanh(neg_dist_hl))
 
             _loss = \
-                K.sigmoid(pos_dist - neg_dist) #+\
-                # Metrics.cross_entropy(one, K.sigmoid(neg_dist))
+                - ((1.0-neg_dist)*K.log(K.maximum(1.0-pos_dist, K.epsilon())) +
+                   (pos_dist)*K.log(K.maximum(neg_dist, K.epsilon())))
             return _loss
 
         loss = 0

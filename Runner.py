@@ -27,6 +27,7 @@ from Metrics import top_k_accuracy
 
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.metrics import precision_recall_fscore_support
@@ -93,7 +94,12 @@ def Run(rpt: Report, bld: str, n_cls: int, shape: tuple, db_opt: dict, bld_opt: 
             y_score = embed_feature[-1]
             clf_report(rpt, y_test, y_score, n_cls, title)
         else:
-            y_score = schema.model.predict(X_test)
+            if bld_opt['classification'] == '':
+                y_score = schema.model.predict(X_test)
+            else:
+                method = bld_opt['classification']
+                model = getattr(schema, method)()
+                y_score = model.predict(X_test)
             clf_report(rpt, y_test, y_score, n_cls, title)
 
     embed_feature_train = getFeatures(schema.getModel(), X_train)
@@ -137,10 +143,10 @@ def Run_SVM(rpt, svm_opt, X_train,
             '_kernel_{}'.format(svm['kernel'])
         print(_title)
         rpt.write_svm(svm['kernel']).flush()
-        clf = SVC(**svm, probability=True)
+        clf = SVC(**svm)
         clf.fit(X_train, y_train)
-        y_score = clf.predict_proba(X_test)
-        clf_report(rpt, y_test, y_score, n_cls, _title)
+        y_pred = clf.predict(X_test)
+        svm_report(rpt, y_test, y_pred, n_cls, _title)
         print("--- %s seconds ---" % (time.time() - start_time))
 
 
@@ -166,16 +172,17 @@ def Run_KNN(rpt, knn_opt, X_train,
 def getKnnOpts(bld: str, knn_opt: dict):
     _knn_opt = []
     if bld.startswith('MyModel'):
-        knn = knn_opt[0]
-        _knn_opt.append(knn)
-        for key, values in knn_opt[1].items():
-            for item in values:
-                _temp = []
-                for i in range(len(knn)):
-                    _knn = dict(knn[i])
-                    _knn.update({key: item})
-                    _temp.append(_knn)
-                _knn_opt.append(_temp)
+        return knn_opt
+        # knn = knn_opt[0]
+        # _knn_opt.append(knn)
+        # for key, values in knn_opt[1].items():
+        #     for item in values:
+        #         _temp = []
+        #         for i in range(len(knn)):
+        #             _knn = dict(knn[i])
+        #             _knn.update({key: item})
+        #             _temp.append(_knn)
+        #         _knn_opt.append(_temp)
     else:
         return knn_opt
     return tuple(_knn_opt)
@@ -209,6 +216,17 @@ def clf_report(rpt: Report, y_true, y_score, n_cls, title):
     rpt.write_precision_recall_f1score(result[0], result[1], result[2])
 
 
+def svm_report(rpt: Report, y_true, y_pred, n_cls, title):
+    print(classification_report(y_true, y_pred, digits=5))
+    cm = confusion_matrix(y_true, y_pred)
+    plot_confusion_matrix(cm, title, np.unique(y_true))
+    accu = accuracy_score(y_true, y_pred)
+    rpt.write_accuracy(accu).flush()
+    result = precision_recall_fscore_support(
+        y_true, y_pred, average='weighted')
+    rpt.write_precision_recall_f1score(result[0], result[1], result[2])
+
+
 def getFeatures(model, X):
     if isinstance(model, list):
         features = []
@@ -221,7 +239,7 @@ def getFeatures(model, X):
 
 def fitModel(schema, n_cls, dgen_opt, datagen, shot,
              X_train, X_valid, y_train, y_valid, aug_flag):
-    callbacks = [EarlyStopping(patience=PATIENCE), TerminateOnNaN()] #,
+    callbacks = [EarlyStopping(patience=PATIENCE), TerminateOnNaN()]
                 #  TensorBoard(log_dir='./logs/tboard', histogram_freq=1, write_grads=True)]
     if 'Original' == datagen:
         if aug_flag:
