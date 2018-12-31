@@ -109,8 +109,8 @@ def my_loss_v1(**kwargs):
             pos_dist_hl = Metrics.squared_hellinger(anc, pos)
             neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
-            pos_dist = (1.0/4.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_kl) + K.tanh(pos_dist_js) + K.tanh(pos_dist_hl))
-            neg_dist = (1.0/4.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_kl) + K.tanh(neg_dist_js) + K.tanh(neg_dist_hl))
+            pos_dist = (1.0/2.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_js))
+            neg_dist = (1.0/2.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_js))
 
             _loss = \
                 - ((1.0-neg_dist)*K.log(K.maximum(1.0-pos_dist, K.epsilon())) +
@@ -178,8 +178,8 @@ def my_loss_v2(**kwargs):
             pos_dist_hl = Metrics.squared_hellinger(anc, pos)
             neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
-            pos_dist = (1.0/4.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_kl) + K.tanh(pos_dist_js) + K.tanh(pos_dist_hl))
-            neg_dist = (1.0/4.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_kl) + K.tanh(neg_dist_js) + K.tanh(neg_dist_hl))
+            pos_dist = (1.0/3.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_kl) + K.tanh(pos_dist_js))
+            neg_dist = (1.0/3.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_kl) + K.tanh(neg_dist_js))
 
             _loss = \
                 - ((1.0-neg_dist)*K.log(K.maximum(1.0-pos_dist, K.epsilon())) +
