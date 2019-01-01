@@ -113,8 +113,8 @@ def my_loss_v1(**kwargs):
             neg_dist = (1.0/2.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_js))
 
             _loss = \
-                - ((1.0-neg_dist)*K.log(K.maximum(1.0-pos_dist, K.epsilon())) +
-                   (pos_dist)*K.log(K.maximum(neg_dist, K.epsilon())))
+                - ((pos_dist)*K.log(K.maximum(pos_dist, K.epsilon())) +
+                   (neg_dist)*K.log(K.maximum(neg_dist, K.epsilon())))
             return _loss
 
         loss = 0
@@ -182,8 +182,8 @@ def my_loss_v2(**kwargs):
             neg_dist = (1.0/2.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_js))
 
             _loss = \
-                - ((1.0-neg_dist)*K.log(K.maximum(1.0-pos_dist, K.epsilon())) +
-                   (pos_dist)*K.log(K.maximum(neg_dist, K.epsilon())))
+                - ((pos_dist)*K.log(K.maximum(pos_dist, K.epsilon())) +
+                   (neg_dist)*K.log(K.maximum(neg_dist, K.epsilon())))
             return _loss
 
         loss = 0

@@ -1,3 +1,4 @@
+from tensorflow.keras import optimizers
 
 TOP_K_ACCU = [1, 5]
 
@@ -6,7 +7,7 @@ __EPOCHS = 9999
 
 PATIENCE = 20
 BATCHSIZE = 32
-OPTIMIZER = 'adam'
+OPTIMIZER = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 FITGENOPTS = {
     'workers': 8,
     'epochs': __EPOCHS,
