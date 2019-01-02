@@ -499,8 +499,8 @@ class SchemaV03(BaseSchema):
                                 # kernel_regularizer=l2(0.01)))
         # model.add(layers.BatchNormalization())
         model.add(layers.Activation('relu'))
-        model.add(layers.Conv2D(64, (3, 3),
-                                kernel_regularizer=l2(0.01)))
+        model.add(layers.Conv2D(64, (3, 3)))
+                                # kernel_regularizer=l2(0.01)))
         # model.add(layers.BatchNormalization())
         model.add(layers.Activation('relu'))
         model.add(layers.MaxPooling2D())
