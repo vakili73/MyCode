@@ -260,11 +260,11 @@ class SchemaV01(BaseSchema):
 
     def buildMyModelV2(self, shape, n_cls):
         model = Sequential()
-        model.add(layers.Conv2D(32, (3, 3), input_shape=shape))
+        model.add(layers.Conv2D(32, (3, 3), padding='same', input_shape=shape))
                                 # kernel_regularizer=l2(0.01)))
         # model.add(layers.BatchNormalization())
         model.add(layers.Activation('relu'))
-        model.add(layers.Conv2D(32, (3, 3)))
+        model.add(layers.Conv2D(32, (3, 3), padding='same'))
                                 # kernel_regularizer=l2(0.01)))
         # model.add(layers.BatchNormalization())
         model.add(layers.Activation('relu'))
@@ -338,11 +338,11 @@ class SchemaV01(BaseSchema):
 
     def buildMyModelV4(self, shape, n_cls):
         model = Sequential()
-        model.add(layers.Conv2D(32, (3, 3), input_shape=shape))
+        model.add(layers.Conv2D(32, (3, 3), padding='same', input_shape=shape))
                                 # kernel_regularizer=l2(0.01)))
         # model.add(layers.BatchNormalization())
         model.add(layers.Activation('relu'))
-        model.add(layers.Conv2D(32, (3, 3)))
+        model.add(layers.Conv2D(32, (3, 3), padding='same'))
                                 # kernel_regularizer=l2(0.01)))
         # model.add(layers.BatchNormalization())
         model.add(layers.Activation('relu'))
@@ -390,11 +390,11 @@ class SchemaV01(BaseSchema):
             https://doi.org/10.1016/j.patcog.2017.09.038
         """
         model = Sequential()
-        model.add(layers.Conv2D(32, (3, 3), input_shape=shape))
+        model.add(layers.Conv2D(32, (3, 3), padding='same', input_shape=shape))
                                 # kernel_regularizer=l2(0.01)))
         # model.add(layers.BatchNormalization())
         model.add(layers.Activation('relu'))
-        model.add(layers.Conv2D(32, (3, 3)))
+        model.add(layers.Conv2D(32, (3, 3), padding='same'))
                                 # kernel_regularizer=l2(0.01)))
         # model.add(layers.BatchNormalization())
         model.add(layers.Activation('relu'))
