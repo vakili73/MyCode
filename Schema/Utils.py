@@ -33,6 +33,12 @@ def save_weights(model, title,
     model.save_weights(path)
 
 
+def load_weights(model, title,
+                 base_path='./logs/models'):
+    path = base_path+'/'+title
+    model.load_weights(path)
+
+
 def save_feature(X, y, title,
                  base_path='./logs/features'):
     np.set_printoptions(precision=16)
