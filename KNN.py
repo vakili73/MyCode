@@ -63,7 +63,8 @@ if __name__ == "__main__":
                 start_time = time.time()
                 rpt.write_knn(knn['weights'], knn['n_neighbors']).flush()
                 rpt.write_text('metric,'+metric).flush()
-                print(f_name[:-11]+'_'+metric)
+                print(f_name[:-11]+'_'+metric+'_weights_{}_neighbors_{}'.format(
+                    knn['weights'], knn['n_neighbors']))
                 clf = KNeighborsClassifier(**knn, metric=metric)
                 clf.fit(embed_feature_train, y_train)
                 y_score = clf.predict_proba(embed_feature)
