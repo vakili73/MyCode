@@ -70,4 +70,6 @@ if __name__ == "__main__":
                 clf_report(rpt, y_test, y_score, n_cls, f_name[:-11])
                 print("--- %s seconds ---" % (time.time() - start_time))
 
+        rpt.end_line()
+
     pass
