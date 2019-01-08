@@ -96,8 +96,8 @@ def my_loss_v1(**kwargs):
             IEEE Trans. Inf. Theory. 49 (7): 1858–1860.
             doi:10.1109/TIT.2003.813506.
             """
-            pos_dist_js = K.sqrt(Metrics.jensen_shannon(anc, pos))
-            neg_dist_js = K.sqrt(Metrics.jensen_shannon(anc, neg))
+            # pos_dist_js = K.sqrt(Metrics.jensen_shannon(anc, pos))
+            # neg_dist_js = K.sqrt(Metrics.jensen_shannon(anc, neg))
 
             """
             Squared Hellinger distance
@@ -109,8 +109,8 @@ def my_loss_v1(**kwargs):
             # pos_dist_hl = Metrics.squared_hellinger(anc, pos)
             # neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
-            pos_dist = (1.0/2.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_js))
-            neg_dist = (1.0/2.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_js))
+            pos_dist = K.tanh(pos_dist_l2)
+            neg_dist = K.tanh(neg_dist_l2)
 
             _loss = \
                 - ((pos_dist)*K.log(K.maximum(pos_dist, K.epsilon())) +
@@ -165,8 +165,8 @@ def my_loss_v2(**kwargs):
             IEEE Trans. Inf. Theory. 49 (7): 1858–1860.
             doi:10.1109/TIT.2003.813506.
             """
-            pos_dist_js = K.sqrt(Metrics.jensen_shannon(anc, pos))
-            neg_dist_js = K.sqrt(Metrics.jensen_shannon(anc, neg))
+            # pos_dist_js = K.sqrt(Metrics.jensen_shannon(anc, pos))
+            # neg_dist_js = K.sqrt(Metrics.jensen_shannon(anc, neg))
 
             """
             Squared Hellinger distance
@@ -178,8 +178,8 @@ def my_loss_v2(**kwargs):
             # pos_dist_hl = Metrics.squared_hellinger(anc, pos)
             # neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
-            pos_dist = (1.0/2.0)*(K.tanh(pos_dist_l2) + K.tanh(pos_dist_js))
-            neg_dist = (1.0/2.0)*(K.tanh(neg_dist_l2) + K.tanh(neg_dist_js))
+            pos_dist = K.tanh(pos_dist_l2)
+            neg_dist = K.tanh(neg_dist_l2)
 
             _loss = \
                 - ((pos_dist)*K.log(K.maximum(pos_dist, K.epsilon())) +
