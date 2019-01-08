@@ -103,6 +103,7 @@ def Run(rpt: Report, bld: str, n_cls: int, shape: tuple, db_opt: dict, bld_opt: 
             clf_report(rpt, y_test, y_score, n_cls, title)
 
     embed_feature_train = getFeatures(schema.getModel(), X_train)
+    save_feature(embed_feature_train, y_train, title+'_train')
     if isinstance(embed_feature, list):
         knn_opt = getKnnOpts(bld, knn_opt)
         for i in range(len(embed_feature_train)):
@@ -240,7 +241,7 @@ def getFeatures(model, X):
 def fitModel(schema, n_cls, dgen_opt, datagen, shot,
              X_train, X_valid, y_train, y_valid, aug_flag):
     callbacks = [EarlyStopping(patience=PATIENCE), TerminateOnNaN()]
-                #  TensorBoard(log_dir='./logs/tboard', histogram_freq=1, write_grads=True)]
+    #  TensorBoard(log_dir='./logs/tboard', histogram_freq=1, write_grads=True)]
     if 'Original' == datagen:
         if aug_flag:
             datagen = ImageDataGenerator(**dgen_opt)
