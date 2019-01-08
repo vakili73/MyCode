@@ -177,20 +177,20 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    'SiameseV1': {
-        'loss': 'K-binary_crossentropy',
-        'metrics': [],
-        'datagen': 'SiameseV1',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
-    'SiameseV2': {
-        'loss': 'L-contrastive',
-        'metrics': [],
-        'datagen': 'SiameseV2',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'SiameseV1': {
+    #     'loss': 'K-binary_crossentropy',
+    #     'metrics': [],
+    #     'datagen': 'SiameseV1',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
+    # 'SiameseV2': {
+    #     'loss': 'L-contrastive',
+    #     'metrics': [],
+    #     'datagen': 'SiameseV2',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'TripletV1': {
     #     'loss': 'K-mean_squared_error',
     #     'metrics': [],
@@ -198,11 +198,11 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    'TripletV2': {
-        'loss': 'L-triplet',
-        'metrics': [],
-        'datagen': 'Triplet',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'TripletV2': {
+    #     'loss': 'L-triplet',
+    #     'metrics': [],
+    #     'datagen': 'Triplet',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
 }
