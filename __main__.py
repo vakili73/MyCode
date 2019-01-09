@@ -21,7 +21,6 @@ from tensorflow.keras import backend as K
 if __name__ == "__main__":
 
     np.random.seed(0)
-    tf.set_random_seed(0)
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
