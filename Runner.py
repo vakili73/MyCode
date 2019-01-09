@@ -67,7 +67,7 @@ def Run(rpt: Report, bld: str, n_cls: int, shape: tuple, db_opt: dict, bld_opt: 
 
     loss_args = getLossArgs(bld, n_cls, schema)
     loss = load_loss(bld_opt['loss'], **loss_args)
-    knn_opt = bld_opt['knn']
+    # knn_opt = bld_opt['knn']
     svm_opt = bld_opt['svm']
 
     title = db+'_'+bld+'_'+schm+'_'+str(aug_flag)+'_'+str(shot)
@@ -104,24 +104,24 @@ def Run(rpt: Report, bld: str, n_cls: int, shape: tuple, db_opt: dict, bld_opt: 
 
     embed_feature_train = getFeatures(schema.getModel(), X_train)
     save_feature(embed_feature_train, y_train, title+'_train')
-    if isinstance(embed_feature, list):
-        knn_opt = getKnnOpts(bld, knn_opt)
-        for i in range(len(embed_feature_train)):
-            for j in range(len(knn_opt)):
-                rpt.write_text('knn_metrics_%d' % i).flush()
-                Run_KNN(rpt, knn_opt[j], embed_feature_train[i],
-                        embed_feature[i], y_train, y_test, n_cls, title+'_'+str(i))
-    else:
-        knn_opt = getKnnOpts(bld, knn_opt)
-        if isinstance(knn_opt, tuple):
-            for i in range(len(knn_opt)):
-                rpt.write_text('knn_metrics').flush()
-                Run_KNN(rpt, knn_opt[i], embed_feature_train,
-                        embed_feature, y_train, y_test, n_cls, title)
-        else:
-            rpt.write_text('knn_metrics').flush()
-            Run_KNN(rpt, knn_opt, embed_feature_train,
-                    embed_feature, y_train, y_test, n_cls, title)
+    # if isinstance(embed_feature, list):
+    #     knn_opt = getKnnOpts(bld, knn_opt)
+    #     for i in range(len(embed_feature_train)):
+    #         for j in range(len(knn_opt)):
+    #             rpt.write_text('knn_metrics_%d' % i).flush()
+    #             Run_KNN(rpt, knn_opt[j], embed_feature_train[i],
+    #                     embed_feature[i], y_train, y_test, n_cls, title+'_'+str(i))
+    # else:
+    #     knn_opt = getKnnOpts(bld, knn_opt)
+    #     if isinstance(knn_opt, tuple):
+    #         for i in range(len(knn_opt)):
+    #             rpt.write_text('knn_metrics').flush()
+    #             Run_KNN(rpt, knn_opt[i], embed_feature_train,
+    #                     embed_feature, y_train, y_test, n_cls, title)
+    #     else:
+    #         rpt.write_text('knn_metrics').flush()
+    #         Run_KNN(rpt, knn_opt, embed_feature_train,
+    #                 embed_feature, y_train, y_test, n_cls, title)
 
     if isinstance(embed_feature, list):
         for i in range(len(embed_feature)):
