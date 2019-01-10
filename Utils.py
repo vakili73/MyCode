@@ -21,6 +21,11 @@ from tensorflow.keras.utils import to_categorical
 
 # %% Utils function
 
+def load_history(file_path):
+    with open(file_path, 'rb') as f:
+        return _pickle.load(f)
+
+
 def plot_pca_reduction(embeddings, targets, title, save=True, figsize=(19.20, 10.80),
                        base_path='./logs/vizplots') -> plt.Figure:
     X = PCA(n_components=3).fit_transform(embeddings)
@@ -70,6 +75,28 @@ def plot_reduction(**kwargs):
     else:
         plot_lsa_reduction(**kwargs)
         plot_pca_reduction(**kwargs)
+
+
+def plot_comparison_accu(hist_c, hist_m, title, save=True, figsize=(19.20, 10.80),
+                         base_path='./logs/cmpaccu') -> plt.Figure:
+    plt.clf()
+    plt.gcf().set_size_inches(*figsize)
+    plt.title(title)
+    plt.xlabel('Epoch')
+    plt.ylabel('Validation Accuracy')
+    plt.plot(hist_c['epoch'],
+             hist_c['val_acc'],
+             label='Conventional')
+    plt.plot(hist_m['epoch'],
+             hist_m['val_my_accu'],
+             label='MyModel')
+    plt.legend()
+    if save:
+        if not os.path.exists(base_path):
+            os.makedirs(base_path)
+        path = base_path+'/'+title+'.png'
+        plt.gcf().savefig(path)
+    return plt.gcf()
 
 
 def plot_lr_curve(history, title, save=True, figsize=(19.20, 10.80),
