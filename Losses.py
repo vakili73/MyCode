@@ -83,10 +83,10 @@ def my_loss_v1(**kwargs):
             Annals of Mathematical Statistics. 22 (1): 79–86.
             doi:10.1214/aoms/1177729694. MR 0039968.
             """
-            # pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
-            #     Metrics.kullback_leibler(pos, anc)
-            # neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
-            #     Metrics.kullback_leibler(neg, anc)
+            pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
+                Metrics.kullback_leibler(pos, anc)
+            neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
+                Metrics.kullback_leibler(neg, anc)
 
             """
             Squared Jensen-Shannon distance
@@ -95,8 +95,8 @@ def my_loss_v1(**kwargs):
             IEEE Trans. Inf. Theory. 49 (7): 1858–1860.
             doi:10.1109/TIT.2003.813506.
             """
-            pos_dist_js = Metrics.jensen_shannon(anc, pos)
-            neg_dist_js = Metrics.jensen_shannon(anc, neg)
+            # pos_dist_js = Metrics.jensen_shannon(anc, pos)
+            # neg_dist_js = Metrics.jensen_shannon(anc, neg)
 
             """
             Squared Hellinger distance
@@ -108,8 +108,8 @@ def my_loss_v1(**kwargs):
             # pos_dist_hl = Metrics.squared_hellinger(anc, pos)
             # neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
-            pos_dist = K.tanh(pos_dist_js)
-            neg_dist = K.tanh(neg_dist_js)
+            pos_dist = K.tanh(pos_dist_kl)
+            neg_dist = K.tanh(neg_dist_kl)
 
             _loss = \
                 - ((pos_dist)*K.log(K.maximum(pos_dist, K.epsilon())) +
@@ -151,10 +151,10 @@ def my_loss_v2(**kwargs):
             Annals of Mathematical Statistics. 22 (1): 79–86.
             doi:10.1214/aoms/1177729694. MR 0039968.
             """
-            # pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
-            #     Metrics.kullback_leibler(pos, anc)
-            # neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
-            #     Metrics.kullback_leibler(neg, anc)
+            pos_dist_kl = Metrics.kullback_leibler(anc, pos) +\
+                Metrics.kullback_leibler(pos, anc)
+            neg_dist_kl = Metrics.kullback_leibler(anc, neg) +\
+                Metrics.kullback_leibler(neg, anc)
 
             """
             Squared Jensen-Shannon distance
@@ -163,8 +163,8 @@ def my_loss_v2(**kwargs):
             IEEE Trans. Inf. Theory. 49 (7): 1858–1860.
             doi:10.1109/TIT.2003.813506.
             """
-            pos_dist_js = Metrics.jensen_shannon(anc, pos)
-            neg_dist_js = Metrics.jensen_shannon(anc, neg)
+            # pos_dist_js = Metrics.jensen_shannon(anc, pos)
+            # neg_dist_js = Metrics.jensen_shannon(anc, neg)
 
             """
             Squared Hellinger distance
@@ -176,8 +176,8 @@ def my_loss_v2(**kwargs):
             # pos_dist_hl = Metrics.squared_hellinger(anc, pos)
             # neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
-            pos_dist = K.tanh(pos_dist_js)
-            neg_dist = K.tanh(neg_dist_js)
+            pos_dist = K.tanh(pos_dist_kl)
+            neg_dist = K.tanh(neg_dist_kl)
 
             _loss = \
                 - ((pos_dist)*K.log(K.maximum(pos_dist, K.epsilon())) +
