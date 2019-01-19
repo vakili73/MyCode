@@ -64,12 +64,14 @@ if __name__ == "__main__":
 
         silscore = metrics.silhouette_score(X_test, y_test, metric='euclidean')
         rpt.write_text('euclidean_silscore,'+str(silscore)).flush()
+        print(f_test+' '+'euclidean_silscore,'+str(silscore))
 
         # silscore = metrics.silhouette_score(X_test, y_test, metric='jensenshannon')
         # rpt.write_text('jensenshannon_silscore,'+str(silscore)).flush()
 
         betacv_score = betacv(X_test, y_test, metric='euclidean')
         rpt.write_text('euclidean_betacv,'+str(betacv_score)).flush()
+        print(f_test+' '+'euclidean_betacv,'+str(betacv_score))
 
         # betacv_score = betacv(X_test, y_test, metric='jensenshannon')
         # rpt.write_text('jensenshannon_betacv,'+str(betacv_score)).flush()
