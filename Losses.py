@@ -210,17 +210,17 @@ def my_loss_v3(**kwargs):
     return _loss
 
 
-# def my_loss_v4(**kwargs):
-#     n_cls = kwargs['n_cls']
+def my_loss_v4(**kwargs):
+    n_cls = kwargs['n_cls']
 
-#     def _loss(y_true, y_pred):
-#         output_a = y_pred[:,:(n_cls)]
-#         output_p = y_pred[:, (n_cls):(n_cls*2)]
-#         output_n = y_pred[:, (n_cls*2):(n_cls*3)]
+    def _loss(y_true, y_pred):
+        output_a = y_pred[:,:(n_cls)]
+        output_p = y_pred[:, (n_cls):(n_cls*2)]
+        output_n = y_pred[:, (n_cls*2):(n_cls*3)]
 
-#         loss = \
-#             Metrics.jensen_shannon(output_a, output_p) +\
-#             K.tanh(1-Metrics.jensen_shannon(output_a, output_n))
-#         return loss
+        loss = \
+            Metrics.jensen_shannon(output_a, output_p) +\
+            -K.log(K.tanh(Metrics.jensen_shannon(output_a, output_n)))
+        return loss
 
-#     return _loss
+    return _loss
