@@ -219,8 +219,8 @@ def my_loss_v4(**kwargs):
         output_n = y_pred[:, (n_cls*2):(n_cls*3)]
 
         loss = \
-            Metrics.jensen_shannon(output_a, output_p) +\
-            -K.log(K.tanh(Metrics.jensen_shannon(output_a, output_n)))
+            K.sqrt(Metrics.jensen_shannon(output_a, output_p)) +\
+            -K.log(K.tanh(K.sqrt(Metrics.jensen_shannon(output_a, output_n))))
         return loss
 
     return _loss
