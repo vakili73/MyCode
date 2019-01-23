@@ -204,7 +204,8 @@ def my_loss_v3(**kwargs):
 
     def _loss(y_true, y_pred):
         m = 0.5 * (y_true + y_pred)
-        return Metrics.kullback_leibler(y_pred, m) + Metrics.kullback_leibler(m, y_pred)
+        return Metrics.kullback_leibler(y_pred, m) +\
+            Metrics.kullback_leibler(m, y_pred)
 
     return _loss
 
