@@ -193,6 +193,13 @@ METHODS = {
         'knn': __KNNS,
         'svm': __SVMS,
     },
+    'MyModelV7': {
+        'loss': 'L-my_loss_v4',
+        'metrics': [],
+        'datagen': 'MyTriplet',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
     # 'SiameseV1': {
     #     'loss': 'K-binary_crossentropy',
     #     'metrics': [],
