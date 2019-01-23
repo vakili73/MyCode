@@ -214,7 +214,7 @@ def my_loss_v4(**kwargs):
     n_cls = kwargs['n_cls']
 
     def _loss(y_true, y_pred):
-        output_a = y_pred[:,:(n_cls)]
+        output_a = y_pred[:, :(n_cls)]
         output_p = y_pred[:, (n_cls):(n_cls*2)]
         output_n = y_pred[:, (n_cls*2):(n_cls*3)]
 
