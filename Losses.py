@@ -199,16 +199,27 @@ def my_loss_v2(**kwargs):
 
     return _loss
 
+
 def my_loss_v3(**kwargs):
 
     def _loss(y_true, y_pred):
-            """
-            Squared Jensen-Shannon distance
-            Endres, D. M.; J. E. Schindelin (2003).
-            "A new metric for probability distributions".
-            IEEE Trans. Inf. Theory. 49 (7): 1858–1860.
-            doi:10.1109/TIT.2003.813506.
-            """
-            return K.sqrt(Metrics.jensen_shannon(y_true, y_pred))
+        m = 0.5 * (y_true + y_pred)
+        return Metrics.kullback_leibler(y_pred, m) + Metrics.kullback_leibler(m, y_pred)
 
     return _loss
+
+
+# def my_loss_v4(**kwargs):
+#     n_cls = kwargs['n_cls']
+
+#     def _loss(y_true, y_pred):
+#         output_a = y_pred[:,:(n_cls)]
+#         output_p = y_pred[:, (n_cls):(n_cls*2)]
+#         output_n = y_pred[:, (n_cls*2):(n_cls*3)]
+
+#         loss = \
+#             Metrics.jensen_shannon(output_a, output_p) +\
+#             K.tanh(1-Metrics.jensen_shannon(output_a, output_n))
+#         return loss
+
+#     return _loss
