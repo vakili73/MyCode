@@ -192,14 +192,16 @@ def getKnnOpts(bld: str, knn_opt: dict):
 def getMetricArgs(bld: str, n_cls, schema):
     m_args = {'n_cls': n_cls}
     if bld.startswith('MyModel'):
-        m_args.update({'e_len': schema.e_len})
+        if hasattr(schema, 'e_len'):
+            m_args.update({'e_len': schema.e_len})
     return m_args
 
 
 def getLossArgs(bld: str, n_cls, schema):
     l_args = {'n_cls': n_cls}
     if bld.startswith('MyModel'):
-        l_args.update({'e_len': schema.e_len})
+        if hasattr(schema, 'e_len'):
+            l_args.update({'e_len': schema.e_len})
     return l_args
 
 

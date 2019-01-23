@@ -458,6 +458,38 @@ class SchemaV03(BaseSchema):
             inputs=[input_a, input_p, input_n], outputs=concat)
         return self
 
+    def buildMyModelV5(self, shape, n_cls):
+        model = self.build(shape)
+        model.add(layers.Dense(512, activation='sigmoid'))
+        #    kernel_regularizer=l2(0.01)))
+        model.add(layers.Dropout(0.5))
+        layer = layers.Dense(128, activation='sigmoid')
+        #  kernel_regularizer=l2(0.01))
+        model.add(layer)
+        model.add(layers.Dropout(0.5))
+        model.add(layers.Dense(n_cls, activation='softmax'))
+
+        self.input = model.input
+        self.output = layer.output
+        self.model = model
+        return self
+
+    def buildMyModelV6(self, shape, n_cls):
+        model = self.build(shape)
+        model.add(layers.Dense(512, activation='sigmoid'))
+        #    kernel_regularizer=l2(0.01)))
+        model.add(layers.Dropout(0.5))
+        layer = layers.Dense(128, activation='sigmoid')
+        #  kernel_regularizer=l2(0.01))
+        model.add(layer)
+        model.add(layers.Dropout(0.5))
+        model.add(layers.Dense(n_cls, activation='sigmoid'))
+
+        self.input = model.input
+        self.output = layer.output
+        self.model = model
+        return self
+
     def build(self, shape):
         """
         [0] https://github.com/thomalm/svhn-multi-digit/blob/master/02-svhn-single-model.ipynb

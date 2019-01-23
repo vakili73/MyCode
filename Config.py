@@ -23,7 +23,7 @@ FITOPTS = {
     'batch_size': BATCHSIZE,
 }
 
-__SHOTS = [50, None]
+__SHOTS = [None] # 50, 
 
 __DATAGEN_OPT_COLORED_IMAGE = {
     'rotation_range': 20,
@@ -131,14 +131,14 @@ __SVMS = [
 ]
 
 METHODS = {
-    'ConventionalV1': {
-        'loss': 'K-categorical_crossentropy',
-        'metrics': ['K-acc'],
-        'datagen': 'Original',
-        'classification': '',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'ConventionalV1': {
+    #     'loss': 'K-categorical_crossentropy',
+    #     'metrics': ['K-acc'],
+    #     'datagen': 'Original',
+    #     'classification': '',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'ConventionalV2': {
     #     'loss': 'K-categorical_crossentropy',
     #     'metrics': ['K-acc'],
@@ -147,14 +147,14 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    'MyModelV1': {
-        'loss': 'L-my_loss_v1',
-        'metrics': ['L-my_accu'],
-        'datagen': 'MyTriplet',
-        'classification': 'getClfModel',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'MyModelV1': {
+    #     'loss': 'L-my_loss_v1',
+    #     'metrics': ['L-my_accu'],
+    #     'datagen': 'MyTriplet',
+    #     'classification': 'getClfModel',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'MyModelV2': {
     #     'loss': 'L-my_loss_v1',
     #     'metrics': ['L-my_accu'],
@@ -177,6 +177,22 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
+    'MyModelV5': {
+        'loss': 'L-my_loss_v3',
+        'metrics': ['K-acc'],
+        'datagen': 'Original',
+        'classification': '',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
+    'MyModelV6': {
+        'loss': 'L-my_loss_v3',
+        'metrics': ['K-acc'],
+        'datagen': 'Original',
+        'classification': '',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
     # 'SiameseV1': {
     #     'loss': 'K-binary_crossentropy',
     #     'metrics': [],
