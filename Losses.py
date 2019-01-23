@@ -211,12 +211,12 @@ def my_loss_v3(**kwargs):
 
 
 def my_loss_v4(**kwargs):
-    n_cls = kwargs['n_cls']
+    e_len = kwargs['e_len']
 
     def _loss(y_true, y_pred):
-        output_a = y_pred[:, :(n_cls)]
-        output_p = y_pred[:, (n_cls):(n_cls*2)]
-        output_n = y_pred[:, (n_cls*2):(n_cls*3)]
+        output_a = y_pred[:, :(e_len)]
+        output_p = y_pred[:, (e_len):(e_len*2)]
+        output_n = y_pred[:, (e_len*2):(e_len*3)]
 
         loss = \
             K.sqrt(Metrics.jensen_shannon(output_a, output_p)) +\

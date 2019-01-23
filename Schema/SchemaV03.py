@@ -498,6 +498,7 @@ class SchemaV03(BaseSchema):
         model.add(layers.Dense(128, activation='sigmoid'))
         #    kernel_regularizer=l2(0.01)))
 
+        self.e_len = 128
         self.input = model.input
         self.output = model.output
 
