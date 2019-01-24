@@ -131,14 +131,14 @@ __SVMS = [
 ]
 
 METHODS = {
-    # 'ConventionalV1': {
-    #     'loss': 'K-categorical_crossentropy',
-    #     'metrics': ['K-acc'],
-    #     'datagen': 'Original',
-    #     'classification': '',
-    #     'knn': __KNNS,
-    #     'svm': __SVMS,
-    # },
+    'ConventionalV1': {
+        'loss': 'K-mean_squared_error',
+        'metrics': ['K-acc'],
+        'datagen': 'Original',
+        'classification': '',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
     # 'ConventionalV2': {
     #     'loss': 'K-categorical_crossentropy',
     #     'metrics': ['K-acc'],
@@ -147,6 +147,14 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
+    'ConventionalV3': {
+        'loss': 'K-mean_squared_error',
+        'metrics': ['K-acc'],
+        'datagen': 'Original',
+        'classification': '',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
     # 'MyModelV1': {
     #     'loss': 'L-my_loss_v1',
     #     'metrics': ['L-my_accu'],
@@ -193,13 +201,13 @@ METHODS = {
         'knn': __KNNS,
         'svm': __SVMS,
     },
-    'MyModelV7': {
-        'loss': 'L-my_loss_v4',
-        'metrics': [],
-        'datagen': 'MyTriplet',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'MyModelV7': {
+    #     'loss': 'L-my_loss_v4',
+    #     'metrics': [],
+    #     'datagen': 'MyTriplet',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'SiameseV1': {
     #     'loss': 'K-binary_crossentropy',
     #     'metrics': [],
