@@ -45,7 +45,7 @@ class SchemaV04(BaseSchema):
         self.model = model
         return self
 
-    def buildConventionalV1(self, shape, n_cls):
+    def buildConventionalV3(self, shape, n_cls):
         model = self.build(shape)
         model.add(layers.Dense(512, activation='sigmoid'))
         #    kernel_regularizer=l2(0.01)))
