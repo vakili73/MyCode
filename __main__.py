@@ -44,13 +44,19 @@ if __name__ == "__main__":
             data = (_X_train, X_valid, _y_train, y_valid)
 
             for bld, bld_opt in METHODS.items():
-                # With Augmentation
-                rpt.write_dataset(db).write_shot(shot).flush()
-                Run(rpt, bld, n_cls, shape, db_opt, bld_opt,
-                    *data, X_test, y_test, db, shot, True)
-                # Without Augmentation
-                rpt.write_dataset(db).write_shot(shot).flush()
-                Run(rpt, bld, n_cls, shape, db_opt, bld_opt,
-                    *data, X_test, y_test, db, shot, False)
+                for l_name, loss in bld_opt['loss'].items():
+                    bld_opt_tmp = dict(bld_opt)
+                    bld_opt_tmp['loss'] = loss
+
+                    # With Augmentation
+                    rpt.write_dataset(db).write_shot(
+                        shot).write_text('loss,{}'.format(l_name)).flush()
+                    Run(rpt, bld, n_cls, shape, db_opt, bld_opt_tmp,
+                        *data, X_test, y_test, db, shot, True, l_name)
+                    # Without Augmentation
+                    rpt.write_dataset(db).write_shot(
+                        shot).write_text('loss,{}'.format(l_name)).flush()
+                    Run(rpt, bld, n_cls, shape, db_opt, bld_opt_tmp,
+                        *data, X_test, y_test, db, shot, False, l_name)
     rpt.flush()
     rpt.close()

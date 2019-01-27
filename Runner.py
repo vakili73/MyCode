@@ -43,7 +43,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 def Run(rpt: Report, bld: str, n_cls: int, shape: tuple, db_opt: dict, bld_opt: dict,
         X_train: np.ndarray, X_valid: np.ndarray, y_train: np.ndarray, y_valid: np.ndarray,
-        X_test: np.ndarray, y_test: np.ndarray, db: str, shot: int, aug_flag: bool = False):
+        X_test: np.ndarray, y_test: np.ndarray, db: str, shot: int, aug_flag: bool, l_name: str):
 
     schm = db_opt['schema']
     schema = load_schema(schm)
@@ -70,7 +70,7 @@ def Run(rpt: Report, bld: str, n_cls: int, shape: tuple, db_opt: dict, bld_opt: 
     # knn_opt = bld_opt['knn']
     svm_opt = bld_opt['svm']
 
-    title = db+'_'+bld+'_'+schm+'_'+str(aug_flag)+'_'+str(shot)
+    title = db+'_'+bld+'_'+schm+'_'+l_name+'_'+str(aug_flag)+'_'+str(shot)
     print(title)
     rpt.write_build(bld).write_schema(schm).flush()
     rpt.write_augment(aug_flag).flush()
