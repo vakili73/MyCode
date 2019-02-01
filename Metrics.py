@@ -40,8 +40,8 @@ def my_accu(**kwargs):
 
 
 def kullback_leibler(tensor_a, tensor_b):
-    tensor_a = K.clip(tensor_a, K.epsilon(), 1.0)
-    tensor_b = K.clip(tensor_b, K.epsilon(), 1.0)
+    tensor_a = K.clip(tensor_a, K.epsilon(), 1.0-K.epsilon())
+    tensor_b = K.clip(tensor_b, K.epsilon(), 1.0-K.epsilon())
     return K.sum(tensor_a * K.log(tensor_a / tensor_b), axis=-1)
 
 
