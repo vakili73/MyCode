@@ -1,5 +1,5 @@
 
-TOP_K_ACCU = [1, 5]
+TOP_K_ACCU = [1]  # , 5
 
 __VERBOSE = 2
 __EPOCHS = 9999
@@ -126,8 +126,8 @@ __SVMS = [
      'gamma': 'scale', },
     # {'kernel': 'poly',
     #  'gamma': 'scale', },
-    # {'kernel': 'sigmoid',
-    #  'gamma': 'scale', },
+    {'kernel': 'sigmoid',
+     'gamma': 'scale', },
 ]
 
 METHODS = {
@@ -135,9 +135,11 @@ METHODS = {
         'loss': {
             'MSE': 'K-mean_squared_error',
             'MAE': 'K-mean_absolute_error',
+            'MAPE': 'K-mean_absolute_percentage_error',
+            'MSLE': 'K-mean_squared_logarithmic_error',
             'SHNG': 'K-squared_hinge',
             'HNG': 'K-hinge',
-            'CHNG': 'K-categorical_hinge',
+            # 'CHNG': 'K-categorical_hinge',
             'LCH': 'K-logcosh',
             'CRE': 'K-categorical_crossentropy',
             'KLD': 'K-kullback_leibler_divergence',
