@@ -62,7 +62,7 @@ def entropy(tensor):
 
 
 def cross_entropy(tensor_a, tensor_b):
-    tensor_b = K.clip(tensor_b, K.epsilon(), 1.0)
+    tensor_b = K.clip(tensor_b, K.epsilon(), 1.0-K.epsilon())
     return -K.sum(tensor_a * K.log(tensor_b), axis=-1)
 
 
