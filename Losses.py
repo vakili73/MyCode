@@ -111,8 +111,8 @@ def my_loss_v1(**kwargs):
             # neg_dist_hl = Metrics.squared_hellinger(anc, neg)
 
             _loss = \
-                - ((pos_dist_js)*K.log(K.maximum(pos_dist_js, K.epsilon())) +
-                   (neg_dist_js)*K.log(K.maximum(neg_dist_js, K.epsilon())))
+                - (K.tanh(pos_dist_js)*K.log(K.maximum(K.tanh(pos_dist_js), K.epsilon())) +
+                   K.tanh(neg_dist_js)*K.log(K.maximum(K.tanh(neg_dist_js), K.epsilon())))
             return _loss
 
         loss = 0
