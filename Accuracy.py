@@ -6,17 +6,20 @@ from Utils import plot_comparison_accu
 
 if __name__ == "__main__":
 
-    for f_path in glob.glob("./logs/histories/*ConventionalV1*.cpkl"):
+    cmp_list = [
+        'True_None',
+        'False_None',
+    ]
 
-        _f_path = f_path.split('_')
-        _f_path[1] = 'MyModelV1'
+    for cmpls in cmp_list:
 
-        history = load_history(f_path)
-        _history = load_history('_'.join(_f_path))
+        files = sorted(glob.glob("./logs/histories/*"+cmpls+".cpkl"))
 
-        db = _f_path[0].split('/')[-1]
-        title = db + '_' + '_'.join(_f_path[2:4])
-        title += '_' + _f_path[4][:-5]
+        hists = []
+        lables = []
+        for f in files:
+            hists.append(load_history(f))
+            lable = f.split('_')[-3]
+            lables.append(lable)
 
-        print(title)
-        plot_comparison_accu(history, _history, title)
+        plot_comparison_accu(hists, lables, cmpls)

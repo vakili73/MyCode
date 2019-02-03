@@ -77,19 +77,17 @@ def plot_reduction(**kwargs):
         plot_pca_reduction(**kwargs)
 
 
-def plot_comparison_accu(hist_c, hist_m, title, save=True, figsize=(19.20, 10.80),
+def plot_comparison_accu(hists, labels, title, save=True, figsize=(19.20, 10.80),
                          base_path='./logs/cmpaccu') -> plt.Figure:
     plt.clf()
     plt.gcf().set_size_inches(*figsize)
     plt.title(title)
     plt.xlabel('Epoch')
     plt.ylabel('Validation Accuracy')
-    plt.plot(hist_c['epoch'],
-             hist_c['val_acc'],
-             label='Conventional')
-    plt.plot(hist_m['epoch'],
-             hist_m['val_my_accu'],
-             label='MyModel')
+    for i in range(len(hists)):
+        hist = hists[i]['val_acc'] if 'val_acc' in hists[i].keys(
+        ) else hists[i]['val_my_accu']
+        plt.plot(hists[i]['epoch'], hist, label=labels[i])
     plt.legend()
     if save:
         if not os.path.exists(base_path):
