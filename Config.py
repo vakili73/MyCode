@@ -131,27 +131,27 @@ __SVMS = [
 ]
 
 METHODS = {
-    'ConventionalV1': {
-        'loss': {
-            'MSE': 'K-mean_squared_error',
-            'MAE': 'K-mean_absolute_error',
-            'MAPE': 'K-mean_absolute_percentage_error',
-            'MSLE': 'K-mean_squared_logarithmic_error',
-            'SHNG': 'K-squared_hinge',
-            'HNG': 'K-hinge',
-            # 'CHNG': 'K-categorical_hinge',
-            'LCH': 'K-logcosh',
-            'CRE': 'K-categorical_crossentropy',
-            'KLD': 'K-kullback_leibler_divergence',
-            'POS': 'K-poisson',
-            'COS': 'K-cosine_proximity',
-        },
-        'metrics': ['K-acc'],
-        'datagen': 'Original',
-        'classification': '',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'ConventionalV1': {
+    #     'loss': {
+    #         'MSE': 'K-mean_squared_error',
+    #         'MAE': 'K-mean_absolute_error',
+    #         'MAPE': 'K-mean_absolute_percentage_error',
+    #         'MSLE': 'K-mean_squared_logarithmic_error',
+    #         'SHNG': 'K-squared_hinge',
+    #         'HNG': 'K-hinge',
+    #         # 'CHNG': 'K-categorical_hinge',
+    #         'LCH': 'K-logcosh',
+    #         'CRE': 'K-categorical_crossentropy',
+    #         'KLD': 'K-kullback_leibler_divergence',
+    #         'POS': 'K-poisson',
+    #         'COS': 'K-cosine_proximity',
+    #     },
+    #     'metrics': ['K-acc'],
+    #     'datagen': 'Original',
+    #     'classification': '',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'ConventionalV2': {
     #     'loss': {'CRE': 'K-categorical_crossentropy'},
     #     'metrics': ['K-acc'],
@@ -180,7 +180,10 @@ METHODS = {
     #     'svm': __SVMS,
     # },
     'MyModelV1': {
-        'loss': {'MLV1': 'L-my_loss_v1'},
+        'loss': {
+            # 'MLV1': 'L-my_loss_v1',
+            'MLV11': 'L-my_loss_v1_1',
+            },
         'metrics': ['L-my_accu'],
         'datagen': 'MyTriplet',
         'classification': 'getClfModel',
@@ -209,14 +212,14 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    'MyModelV5': {
-        'loss': {'MLV3': 'L-my_loss_v3'},
-        'metrics': ['K-acc'],
-        'datagen': 'Original',
-        'classification': '',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'MyModelV5': {
+    #     'loss': {'MLV3': 'L-my_loss_v3'},
+    #     'metrics': ['K-acc'],
+    #     'datagen': 'Original',
+    #     'classification': '',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'MyModelV6': {
     #     'loss': {'MLV3': 'L-my_loss_v3'},
     #     'metrics': ['K-acc'],
@@ -232,6 +235,17 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
+    'MyModelV8': {
+        'loss': {
+            'SMLV1': 'L-my_loss_v1',
+            'SMLV11': 'L-my_loss_v1_1',
+            },
+        'metrics': ['L-my_accu'],
+        'datagen': 'MyTriplet',
+        'classification': 'getClfModel',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
     # 'SiameseV1': {
     #     'loss': {'BCRE': 'K-binary_crossentropy'},
     #     'metrics': [],

@@ -444,6 +444,40 @@ class SchemaV01(BaseSchema):
             inputs=[input_a, input_p, input_n], outputs=concat)
         return self
 
+    def buildMyModelV8(self, shape, n_cls):
+        model = self.build(shape)
+        model.add(layers.Dense(128, activation='sigmoid'))
+                            #    kernel_regularizer=l2(0.01)))
+        model.add(layers.Dropout(0.5))
+        layer01 = model.output
+        model.add(layers.Dense(n_cls, activation='softmax'))
+
+        self.e_len = [128]
+        self.output = layer01
+        self.input = model.input
+        self.clf_out = model.output
+
+        input_a = layers.Input(shape=shape)
+        input_p = layers.Input(shape=shape)
+        input_n = layers.Input(shape=shape)
+
+        embed_model = Model(inputs=model.input, outputs=layer01)
+        embed_a = embed_model(input_a)
+        embed_p = embed_model(input_p)
+        embed_n = embed_model(input_n)
+
+        output_a = model(input_a)
+        output_p = model(input_p)
+        output_n = model(input_n)
+
+        concat = layers.Concatenate()(
+            [embed_a, embed_p, embed_n,
+             output_a, output_p, output_n])
+
+        self.model = Model(
+            inputs=[input_a, input_p, input_n], outputs=concat)
+        return self
+
     def build(self, shape):
         """
         [1] https://github.com/ajgallego/Clustering-based-k-Nearest-Neighbor/blob/master/utilKerasModels.py
