@@ -19,7 +19,7 @@ def plot_schema(model, title, show_shapes=True,
                 base_path='./logs/schemas'):
     if not os.path.exists(base_path):
         os.makedirs(base_path)
-    plot_model(model, show_shapes=True,
+    plot_model(model, show_shapes=show_shapes,
                to_file=base_path+'/'+title+'.png',
                show_layer_names=show_layer_names,
                rankdir=rankdir)
