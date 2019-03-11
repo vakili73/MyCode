@@ -1,4 +1,5 @@
 import numpy as np
+import random as rn
 from Runner import Run
 from Reporter import Report
 
@@ -20,7 +21,11 @@ from tensorflow.keras import backend as K
 # %% Main Program
 if __name__ == "__main__":
 
-    np.random.seed(0)
+    def _reproducibility():
+        rn.seed(12345)
+        np.random.seed(12345)
+        tf.set_random_seed(12345)
+    _reproducibility()
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
@@ -49,14 +54,18 @@ if __name__ == "__main__":
                     bld_opt_tmp['loss'] = loss
 
                     # With Augmentation
+                    _reproducibility()
                     rpt.write_dataset(db).write_shot(
                         shot).write_text('loss,{}'.format(l_name)).flush()
                     Run(rpt, bld, n_cls, shape, db_opt, bld_opt_tmp,
                         *data, X_test, y_test, db, shot, True, l_name)
+
                     # Without Augmentation
+                    _reproducibility()
                     rpt.write_dataset(db).write_shot(
                         shot).write_text('loss,{}'.format(l_name)).flush()
                     Run(rpt, bld, n_cls, shape, db_opt, bld_opt_tmp,
                         *data, X_test, y_test, db, shot, False, l_name)
+
     rpt.flush()
     rpt.close()
