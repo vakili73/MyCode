@@ -51,6 +51,72 @@ def triplet(alpha=0.2, **kwargs):
     return _loss
 
 
+def my_loss_v0(**kwargs):
+    n_cls = kwargs['n_cls']
+    e_len = kwargs['e_len']
+
+    def _loss(y_true, y_pred):
+        embeds_ao = []
+        _len = 0
+        for i in range(len(e_len)):
+            embed_a = y_pred[:, _len:(_len+e_len[i])]
+            embed_o = y_pred[:, (_len+e_len[i]):(_len+(e_len[i]*2))]
+            embeds_ao.append((embed_a, embed_o))
+            _len += e_len[i]*2
+
+        output_a = y_pred[:, _len:(_len+n_cls)]
+        output_o = y_pred[:, (_len+n_cls):(_len+(n_cls*2))]
+
+        true_a = y_true[:, :n_cls]
+        true_o = y_true[:, n_cls:(n_cls*2)]
+
+        def __loss(anc, oth):
+
+            # _dist_l2 = Metrics.squared_l2_distance(anc, oth)
+
+            """
+            Symmetrised Kullback and Leibler
+            Kullback, S.; Leibler, R.A. (1951).
+            "On information and sufficiency".
+            Annals of Mathematical Statistics. 22 (1): 79–86.
+            doi:10.1214/aoms/1177729694. MR 0039968.
+            """
+            # _dist_kl = Metrics.kullback_leibler(anc, oth) +\
+            #     Metrics.kullback_leibler(oth, anc)
+
+            """
+            Squared Jensen-Shannon distance
+            Endres, D. M.; J. E. Schindelin (2003).
+            "A new metric for probability distributions".
+            IEEE Trans. Inf. Theory. 49 (7): 1858–1860.
+            doi:10.1109/TIT.2003.813506.
+            """
+            _dist_js = K.sqrt(Metrics.jensen_shannon(anc, oth))
+
+            """
+            Squared Hellinger distance
+            Nikulin, M.S.
+            (2001) [1994], "Hellinger distance"
+            in Hazewinkel, Michiel, Encyclopedia of Mathematics, Springer Science+Business Media B.V.
+            Kluwer Academic Publishers, ISBN 978-1-55608-010-4
+            """
+            # _dist_hl = Metrics.squared_hellinger(anc, oth)
+
+            _loss = \
+                -K.tanh(_dist_js)*K.log(K.maximum(K.tanh(_dist_js), K.epsilon()))
+            return _loss
+
+        loss = 0
+        for i in range(len(e_len)):
+            loss += __loss(*embeds_ao[i])
+        loss += \
+            Metrics.cross_entropy(true_a, output_a) +\
+            Metrics.cross_entropy(true_o, output_o)
+        return loss
+
+    return _loss
+
+
 def my_loss_v1(**kwargs):
     n_cls = kwargs['n_cls']
     e_len = kwargs['e_len']

@@ -38,4 +38,3 @@ class SiameseV2(Sequence):
     def on_epoch_end(self):
         self.x, self.y = shuffle(self.x, self.y)
         self.indices = [np.where(self.y == i)[0] for i in range(self.n_cls)]
-

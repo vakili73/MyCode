@@ -71,11 +71,11 @@ DATASETS = {
         "shots": __SHOTS,
         "dgen_opt": __DATAGEN_OPT_B_AND_W_IMAGE,
     },
-    # "mingnet": {
-    #     "schema": 'V04',
-    #     "shots": __SHOTS,
-    #     "dgen_opt": __DATAGEN_OPT_COLORED_IMAGE,
-    # },
+    "mingnet": {
+        "schema": 'V04',
+        "shots": __SHOTS,
+        "dgen_opt": __DATAGEN_OPT_COLORED_IMAGE,
+    },
     "mnist": {
         "schema": 'V01',
         "shots": __SHOTS,
@@ -86,11 +86,11 @@ DATASETS = {
         "shots": __SHOTS,
         "dgen_opt": __DATAGEN_OPT_B_AND_W_IMAGE,
     },
-    # "omniglot": {
-    #     "schema": 'V01',
-    #     "shots": [None],
-    #     "dgen_opt": __DATAGEN_OPT_B_AND_W_IMAGE,
-    # },
+    "omniglot": {
+        "schema": 'V01',
+        "shots": [None],
+        "dgen_opt": __DATAGEN_OPT_B_AND_W_IMAGE,
+    },
     "stl10": {
         "schema": 'V04',
         "shots": __SHOTS,
@@ -131,27 +131,27 @@ __SVMS = [
 ]
 
 METHODS = {
-    # 'ConventionalV1': {
-    #     'loss': {
-    #         'MSE': 'K-mean_squared_error',
-    #         'MAE': 'K-mean_absolute_error',
-    #         'MAPE': 'K-mean_absolute_percentage_error',
-    #         'MSLE': 'K-mean_squared_logarithmic_error',
-    #         'SHNG': 'K-squared_hinge',
-    #         'HNG': 'K-hinge',
-    #         # 'CHNG': 'K-categorical_hinge',
-    #         'LCH': 'K-logcosh',
-    #         'CRE': 'K-categorical_crossentropy',
-    #         'KLD': 'K-kullback_leibler_divergence',
-    #         'POS': 'K-poisson',
-    #         'COS': 'K-cosine_proximity',
-    #     },
-    #     'metrics': ['K-acc'],
-    #     'datagen': 'Original',
-    #     'classification': '',
-    #     'knn': __KNNS,
-    #     'svm': __SVMS,
-    # },
+    'ConventionalV1': {
+        'loss': {
+            'MSE': 'K-mean_squared_error',
+            'MAE': 'K-mean_absolute_error',
+            'MAPE': 'K-mean_absolute_percentage_error',
+            'MSLE': 'K-mean_squared_logarithmic_error',
+            'SHNG': 'K-squared_hinge',
+            'HNG': 'K-hinge',
+            'CHNG': 'K-categorical_hinge',
+            'LCH': 'K-logcosh',
+            'CRE': 'K-categorical_crossentropy',
+            'KLD': 'K-kullback_leibler_divergence',
+            'POS': 'K-poisson',
+            'COS': 'K-cosine_proximity',
+        },
+        'metrics': ['K-acc'],
+        'datagen': 'Original',
+        'classification': '',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
     # 'ConventionalV2': {
     #     'loss': {'CRE': 'K-categorical_crossentropy'},
     #     'metrics': ['K-acc'],
@@ -179,17 +179,27 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    'MyModelV1': {
+    'MyModelV0': {
         'loss': {
-            # 'MLV1': 'L-my_loss_v1',
-            'MLV11': 'L-my_loss_v1_1',
+            'MLV0': 'L-my_loss_v0',
             },
         'metrics': ['L-my_accu'],
-        'datagen': 'MyTriplet',
+        'datagen': 'MySiamese',
         'classification': 'getClfModel',
         'knn': __KNNS,
         'svm': __SVMS,
     },
+    # 'MyModelV1': {
+    #     'loss': {
+    #         'MLV1': 'L-my_loss_v1',
+    #         'MLV11': 'L-my_loss_v1_1',
+    #         },
+    #     'metrics': ['L-my_accu'],
+    #     'datagen': 'MyTriplet',
+    #     'classification': 'getClfModel',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'MyModelV2': {
     # 'loss': {'MLV1': 'L-my_loss_v1'},
     #     'metrics': ['L-my_accu'],
@@ -235,17 +245,17 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    'MyModelV8': {
-        'loss': {
-            'SMLV1': 'L-my_loss_v1',
-            'SMLV11': 'L-my_loss_v1_1',
-            },
-        'metrics': ['L-my_accu'],
-        'datagen': 'MyTriplet',
-        'classification': 'getClfModel',
-        'knn': __KNNS,
-        'svm': __SVMS,
-    },
+    # 'MyModelV8': {
+    #     'loss': {
+    #         'SMLV1': 'L-my_loss_v1',
+    #         'SMLV11': 'L-my_loss_v1_1',
+    #         },
+    #     'metrics': ['L-my_accu'],
+    #     'datagen': 'MyTriplet',
+    #     'classification': 'getClfModel',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'SiameseV1': {
     #     'loss': {'BCRE': 'K-binary_crossentropy'},
     #     'metrics': [],
@@ -253,13 +263,13 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    # 'SiameseV2': {
-    #     'loss': {'CONT': 'L-contrastive'},
-    #     'metrics': [],
-    #     'datagen': 'SiameseV2',
-    #     'knn': __KNNS,
-    #     'svm': __SVMS,
-    # },
+    'SiameseV2': {
+        'loss': {'CONT': 'L-contrastive'},
+        'metrics': [],
+        'datagen': 'SiameseV2',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
     # 'TripletV1': {
     #     'loss': {'MSE': 'K-mean_squared_error'},
     #     'metrics': [],
@@ -267,11 +277,11 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    # 'TripletV2': {
-    #     'loss': {'TRIP': 'L-triplet'},
-    #     'metrics': [],
-    #     'datagen': 'Triplet',
-    #     'knn': __KNNS,
-    #     'svm': __SVMS,
-    # },
+    'TripletV2': {
+        'loss': {'TRIP': 'L-triplet'},
+        'metrics': [],
+        'datagen': 'Triplet',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
 }

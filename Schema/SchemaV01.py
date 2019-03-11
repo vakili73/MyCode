@@ -237,6 +237,37 @@ class SchemaV01(BaseSchema):
     def getClfModel(self):
         return Model(self.input, self.clf_out)
 
+    def buildMyModelV0(self, shape, n_cls):
+        model = self.build(shape)
+        model.add(layers.Dense(128, activation='sigmoid'))
+                            #    kernel_regularizer=l2(0.01)))
+        model.add(layers.Dropout(0.5))
+        layer01 = model.output
+        model.add(layers.Dense(n_cls, activation='softmax'))
+
+        self.e_len = [128]
+        self.output = layer01
+        self.input = model.input
+        self.clf_out = model.output
+
+        input_a = layers.Input(shape=shape)
+        input_o = layers.Input(shape=shape)
+
+        embed_model = Model(inputs=model.input, outputs=layer01)
+        embed_a = embed_model(input_a)
+        embed_o = embed_model(input_o)
+
+        output_a = model(input_a)
+        output_o = model(input_o)
+
+        concat = layers.Concatenate()(
+            [embed_a, embed_o,
+             output_a, output_o])
+
+        self.model = Model(
+            inputs=[input_a, input_o], outputs=concat)
+        return self
+
     def buildMyModelV1(self, shape, n_cls):
         model = self.build(shape)
         model.add(layers.Dense(128, activation='sigmoid'))

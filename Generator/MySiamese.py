@@ -2,12 +2,10 @@ import numpy as np
 
 from sklearn.utils import shuffle
 from tensorflow.keras.utils import Sequence
+from tensorflow.keras.utils import to_categorical
 
 
-class SiameseV1(Sequence):
-    """
-    Which uses the function of cross-entropy. It is assumed that 1 for the same and 0 for different images.
-    """
+class MySiamese(Sequence):
 
     def __init__(self, x_set, y_set, n_cls, batch_size=128):
         self.x, self.y = x_set, y_set
@@ -28,12 +26,17 @@ class SiameseV1(Sequence):
             o_index = np.random.randint(self.min_len[other])
             a_index = np.random.randint(self.min_len[anchor])
             batch.append((self.x[self.indices[other][o_index]],
-                          self.x[self.indices[anchor][a_index]], 0.))
+                          self.x[self.indices[anchor][a_index]],
+                          to_categorical(other, self.n_cls),
+                          to_categorical(anchor, self.n_cls)))
             a_index = np.random.randint(self.min_len[anchor], size=2)
             batch.append((self.x[self.indices[anchor][a_index[0]]],
-                          self.x[self.indices[anchor][a_index[1]]], 1.))
-        in_1, in_2, out = zip(*batch)
-        return [np.stack(in_1), np.stack(in_2)], np.stack(out)
+                          self.x[self.indices[anchor][a_index[1]]],
+                          to_categorical(anchor, self.n_cls),
+                          to_categorical(anchor, self.n_cls)))
+        in_1, in_2, out_1, out_2 = zip(*batch)
+        return [np.stack(in_1), np.stack(in_2)], np.concatenate([
+            np.stack(out_1), np.stack(out_2)], axis=-1)
 
     def on_epoch_end(self):
         self.x, self.y = shuffle(self.x, self.y)
