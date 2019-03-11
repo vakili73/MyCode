@@ -18,6 +18,7 @@ class BaseSchema(object):
             models = []
             for _output in self.output:
                 models.append(Model(self.input, _output))
+            return models
         return Model(self.input, self.output)
 
     pass
