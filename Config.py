@@ -189,6 +189,16 @@ METHODS = {
         'knn': __KNNS,
         'svm': __SVMS,
     },
+    'MyModelV9': {
+        'loss': {
+            'MLV9': 'L-my_loss_v0',
+            },
+        'metrics': ['L-my_sacc'],
+        'datagen': 'MySiamese',
+        'classification': 'getClfModel',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
     # 'MyModelV1': {
     #     'loss': {
     #         'MLV1': 'L-my_loss_v1',
