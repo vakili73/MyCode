@@ -15,6 +15,26 @@ def top_k_accuracy(y_score, y_true, k=5):
     return np.mean(top_k_bool)
 
 
+def my_sacc(**kwargs):
+    n_cls = kwargs['n_cls']
+    e_len = kwargs['e_len']
+
+    def my_accu(y_true, y_pred):
+        out_len = 0
+        for i in range(len(e_len)):
+            out_len += (e_len[i]*2)
+        output_a = y_pred[:, out_len:(out_len+n_cls)]
+        output_o = y_pred[:, (out_len+n_cls):(out_len+(n_cls*2))]
+        true_a = y_true[:, :n_cls]
+        true_o = y_true[:, n_cls:(n_cls*2)]
+        accu_a = K.cast(
+            K.equal(K.argmax(true_a), K.argmax(output_a)), K.floatx())
+        accu_o = K.cast(
+            K.equal(K.argmax(true_o), K.argmax(output_o)), K.floatx())
+        return K.mean((accu_a+accu_o)/2.0)
+    return my_accu
+
+
 def my_accu(**kwargs):
     n_cls = kwargs['n_cls']
     e_len = kwargs['e_len']
