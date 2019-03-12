@@ -183,7 +183,7 @@ METHODS = {
         'loss': {
             'MLV0': 'L-my_loss_v0',
             },
-        'metrics': ['L-my_accu'],
+        'metrics': ['L-my_sacc'],
         'datagen': 'MySiamese',
         'classification': 'getClfModel',
         'knn': __KNNS,
