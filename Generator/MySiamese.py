@@ -25,10 +25,10 @@ class MySiamese(Sequence):
             other = np.random.choice(classes_order[1:])
             o_index = np.random.randint(self.min_len[other])
             a_index = np.random.randint(self.min_len[anchor])
-            batch.append((self.x[self.indices[other][o_index]],
-                          self.x[self.indices[anchor][a_index]],
-                          to_categorical(other, self.n_cls),
-                          to_categorical(anchor, self.n_cls)))
+            batch.append((self.x[self.indices[anchor][a_index]],
+                          self.x[self.indices[other][o_index]],
+                          to_categorical(anchor, self.n_cls),
+                          to_categorical(other, self.n_cls)))
             a_index = np.random.randint(self.min_len[anchor], size=2)
             batch.append((self.x[self.indices[anchor][a_index[0]]],
                           self.x[self.indices[anchor][a_index[1]]],

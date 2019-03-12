@@ -70,10 +70,10 @@ def plot_reduction(**kwargs):
         targets = kwargs['targets']
         title = kwargs['title']
         for i in range(len(embeddings)):
-            plot_lsa_reduction(embeddings[i], targets, title+'_'+str(i))
+            # plot_lsa_reduction(embeddings[i], targets, title+'_'+str(i))
             plot_pca_reduction(embeddings[i], targets, title+'_'+str(i))
     else:
-        plot_lsa_reduction(**kwargs)
+        # plot_lsa_reduction(**kwargs)
         plot_pca_reduction(**kwargs)
 
 
