@@ -85,10 +85,13 @@ def plot_comparison_accu(hists, labels, title, save=True, figsize=(19.20, 10.80)
     plt.xlabel('Epoch')
     plt.ylabel('Validation Accuracy')
     for i in range(len(hists)):
-        hist = hists[i]['val_acc'] if 'val_acc' in hists[i].keys(
-        ) else hists[i]['val_my_accu']
-        plt.plot(hists[i]['epoch'], hist, label=labels[i])
-    plt.legend()
+        try:
+            hist = hists[i]['val_acc'] if 'val_acc' in hists[i].keys(
+            ) else hists[i]['val_my_accu']
+            plt.plot(hists[i]['epoch'], hist, label=labels[i])
+            plt.legend()
+        except:
+            pass
     if save:
         if not os.path.exists(base_path):
             os.makedirs(base_path)
