@@ -192,6 +192,7 @@ METHODS = {
     'MyModelV9': {
         'loss': {
             'MLV9': 'L-my_loss_v0',
+            'MLV10': 'L-my_loss_v0_1',
             },
         'metrics': ['L-my_sacc'],
         'datagen': 'MySiamese',
