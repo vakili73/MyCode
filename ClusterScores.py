@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     for aug in ['True', 'False']:
         for alg in order:
-            for f_path in glob.glob("./logs/features/*{}_{}_None.txt".format(alg, aug)):
+            for f_path in glob.glob("./logs/features/*_{}_{}_None.txt".format(alg, aug)):
 
                 f_test = f_path.split('/')[-1]
                 X_test, y_test = load_features(f_test)
