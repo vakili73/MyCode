@@ -12,22 +12,39 @@ if __name__ == "__main__":
 
     rpt = Report(file_dir='./cluster_scores.log')
 
-    for f_path in glob.glob("./logs/features/*.txt"):
-        if f_path.endswith('_train.txt'):
-            continue
+    order = [
+        'MSE',
+        'MAE',
+        'MAPE',
+        'MSLE',
+        'SHNG',
+        'HNG',
+        'CHNG',
+        'LCH',
+        'CRE',
+        'KLD',
+        'POS',
+        'COS',
+        'MLV0',
+        'MLV9',
+        'CONT',
+        'TRIP',
+    ]
 
-        f_test = f_path.split('/')[-1]
+    for aug in ['True', 'False']:
+        for alg in order:
+            for f_path in glob.glob("./logs/features/*{}_{}_None.txt".format(alg, aug)):
 
-        X_test, y_test = load_features(f_test)
+                f_test = f_path.split('/')[-1]
+                X_test, y_test = load_features(f_test)
+                rpt.write_text(f_test[:-4]).flush()
 
-        rpt.write_text(f_test[:-4]).flush()
+                print(f_test)
 
-        print(f_test)
+                dbscore = davies_bouldin_score(X_test, y_test)
+                rpt.write_text('davies_bouldin_score,'+str(dbscore)).flush()
 
-        dbscore = davies_bouldin_score(X_test, y_test)
-        rpt.write_text('davies_bouldin_score,'+str(dbscore)).flush()
+                dunnscore = dunn_fast(X_test, y_test)
+                rpt.write_text('dunn_index_score,'+str(dunnscore)).flush()
 
-        dunnscore = dunn_fast(X_test, y_test)
-        rpt.write_text('dunn_index_score,'+str(dunnscore)).flush()
-
-        rpt.end_line()
+                rpt.end_line()
