@@ -78,7 +78,7 @@ def plot_reduction(**kwargs):
 
 
 def plot_comparison_accu(hists, labels, title, save=True, figsize=(19.20, 10.80),
-                         base_path='./logs/cmpaccu') -> plt.Figure:
+                         y_limit=None, base_path='./logs/cmpaccu') -> plt.Figure:
     plt.clf()
     plt.gcf().set_size_inches(*figsize)
     plt.title(title)
@@ -88,7 +88,8 @@ def plot_comparison_accu(hists, labels, title, save=True, figsize=(19.20, 10.80)
         try:
             hist = hists[i]['val_acc'] if 'val_acc' in hists[i].keys(
             ) else hists[i]['val_my_accu']
-            plt.plot(hists[i]['epoch'], hist, label=labels[i])
+            hist = hist[:y_limit]
+            plt.plot(hists[i]['epoch'][:y_limit], hist, label=labels[i])
             plt.legend()
         except:
             pass
