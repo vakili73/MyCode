@@ -237,6 +237,12 @@ class SchemaV01(BaseSchema):
     def getClfModel(self):
         return Model(self.input, self.clf_out)
 
+    def buildMyModel(self, shape, n_cls):
+        return self.buildMyModelV0(shape, n_cls)
+
+    def buildMyModelS(self, shape, n_cls):
+        return self.buildMyModelV0(shape, n_cls)
+
     def buildMyModelV0(self, shape, n_cls):
         model = self.build(shape)
         model.add(layers.Dense(128, activation='sigmoid'))
@@ -474,6 +480,9 @@ class SchemaV01(BaseSchema):
         self.model = Model(
             inputs=[input_a, input_p, input_n], outputs=concat)
         return self
+
+    def buildMyModelT(self, shape, n_cls):
+        return self.buildMyModelV8(shape, n_cls)
 
     def buildMyModelV8(self, shape, n_cls):
         model = self.build(shape)
