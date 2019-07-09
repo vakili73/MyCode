@@ -16,7 +16,7 @@ if __name__ == "__main__":
     for cmpls, title in cmp_list.items():
 
         orders = {
-            'MLV0': 'PROPOSED',
+            'MLV': 'PROPOSED',
             'MSE': '',
             'MAE': '',
             'MAPE': '',

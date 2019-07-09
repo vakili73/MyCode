@@ -8,10 +8,9 @@ PATIENCE = 20
 BATCHSIZE = 128
 OPTIMIZER = 'adadelta'
 FITGENOPTS = {
-    'workers': 8,
     'epochs': __EPOCHS,
     'verbose': __VERBOSE,
-    'max_queue_size': 80,
+    'use_multiprocessing': True,
 }
 STEPS_PER = {
     'steps_per_epoch': 200,
@@ -126,8 +125,8 @@ __SVMS = [
      'gamma': 'scale', },
     # {'kernel': 'poly',
     #  'gamma': 'scale', },
-    {'kernel': 'sigmoid',
-     'gamma': 'scale', },
+    # {'kernel': 'sigmoid',
+    #  'gamma': 'scale', },
 ]
 
 METHODS = {
@@ -139,7 +138,7 @@ METHODS = {
             'MSLE': 'K-mean_squared_logarithmic_error',
             'SHNG': 'K-squared_hinge',
             'HNG': 'K-hinge',
-            'CHNG': 'K-categorical_hinge',
+            # 'CHNG': 'K-categorical_hinge',
             'LCH': 'K-logcosh',
             'CRE': 'K-categorical_crossentropy',
             'KLD': 'K-kullback_leibler_divergence',
@@ -179,9 +178,21 @@ METHODS = {
     #     'knn': __KNNS,
     #     'svm': __SVMS,
     # },
-    'MyModelV0': {
+    'MyModel': {
         'loss': {
-            'MLV0': 'L-my_loss_v0',
+            'MLCZ': 'L-my_loss_CZ',
+            'MLCO': 'L-my_loss_CO',
+            },
+        'metrics': ['L-my_sacc'],
+        'datagen': 'MySiameseCombined',
+        'classification': 'getClfModel',
+        'knn': __KNNS,
+        'svm': __SVMS,
+    },
+    'MyModelS': {
+        'loss': {
+            'MLSZ': 'L-my_loss_SZ',
+            'MLSO': 'L-my_loss_SO',
             },
         'metrics': ['L-my_sacc'],
         'datagen': 'MySiamese',
@@ -189,17 +200,38 @@ METHODS = {
         'knn': __KNNS,
         'svm': __SVMS,
     },
-    'MyModelV9': {
+    'MyModelT': {
         'loss': {
-            'MLV9': 'L-my_loss_v0',
-            'MLV10': 'L-my_loss_v0_1',
+            'MLTZ': 'L-my_loss_TZ',
+            'MLTO': 'L-my_loss_TO',
             },
-        'metrics': ['L-my_sacc'],
-        'datagen': 'MySiamese',
+        'metrics': ['L-my_accu'],
+        'datagen': 'MyTriplet',
         'classification': 'getClfModel',
         'knn': __KNNS,
         'svm': __SVMS,
     },
+    # 'MyModelV0': {
+    #     'loss': {
+    #         'MLV0': 'L-my_loss_v0',
+    #         },
+    #     'metrics': ['L-my_sacc'],
+    #     'datagen': 'MySiamese',
+    #     'classification': 'getClfModel',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
+    # 'MyModelV9': {
+    #     'loss': {
+    #         'MLV9': 'L-my_loss_v0',
+    #         'MLV10': 'L-my_loss_v0_1',
+    #         },
+    #     'metrics': ['L-my_sacc'],
+    #     'datagen': 'MySiamese',
+    #     'classification': 'getClfModel',
+    #     'knn': __KNNS,
+    #     'svm': __SVMS,
+    # },
     # 'MyModelV1': {
     #     'loss': {
     #         'MLV1': 'L-my_loss_v1',

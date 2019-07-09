@@ -6,7 +6,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
-class AugMySiamese(Sequence):
+class AugMySiameseCombined(Sequence):
 
     def __init__(self, x_set, y_set, n_cls, dgen_opt, batch_size=128):
         self.x, self.y = x_set, y_set
@@ -27,9 +27,18 @@ class AugMySiamese(Sequence):
 
     def __getitem__(self, idx):
         batch = []
-        for _ in range(self.batch_size):
-            anchor = np.random.permutation(range(self.n_cls))[0]
+        for _ in range(self.batch_size//2):
+            classes_order = np.random.permutation(range(self.n_cls))
+            anchor = classes_order[0]
+            other = np.random.choice(classes_order[1:])
             anchor_generator = self.generators[anchor]
+            other_generator = self.generators[other]
+            for (anchor_x, _), (other_x, _) in zip(
+                    anchor_generator, other_generator):
+                batch.append((anchor_x[0], other_x[0],
+                              to_categorical(anchor, self.n_cls),
+                              to_categorical(other, self.n_cls)))
+                break
             for (anchor_x1, _), (anchor_x2, _) in zip(
                     anchor_generator, anchor_generator):
                 batch.append((anchor_x1[0], anchor_x2[0],

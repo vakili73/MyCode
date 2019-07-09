@@ -5,7 +5,7 @@ from tensorflow.keras.utils import Sequence
 from tensorflow.keras.utils import to_categorical
 
 
-class MySiamese(Sequence):
+class MySiameseCombined(Sequence):
 
     def __init__(self, x_set, y_set, n_cls, batch_size=128):
         self.x, self.y = x_set, y_set
@@ -19,11 +19,19 @@ class MySiamese(Sequence):
 
     def __getitem__(self, idx):
         batch = []
-        for _ in range(self.batch_size):
-            anchor = np.random.permutation(range(self.n_cls))[0]
-            index = np.random.randint(self.min_len[anchor], size=2)
-            batch.append((self.x[self.indices[anchor][index[0]]],
-                          self.x[self.indices[anchor][index[1]]],
+        for _ in range(self.batch_size//2):
+            classes_order = np.random.permutation(range(self.n_cls))
+            anchor = classes_order[0]
+            other = np.random.choice(classes_order[1:])
+            o_index = np.random.randint(self.min_len[other])
+            a_index = np.random.randint(self.min_len[anchor])
+            batch.append((self.x[self.indices[anchor][a_index]],
+                          self.x[self.indices[other][o_index]],
+                          to_categorical(anchor, self.n_cls),
+                          to_categorical(other, self.n_cls)))
+            a_index = np.random.randint(self.min_len[anchor], size=2)
+            batch.append((self.x[self.indices[anchor][a_index[0]]],
+                          self.x[self.indices[anchor][a_index[1]]],
                           to_categorical(anchor, self.n_cls),
                           to_categorical(anchor, self.n_cls)))
         in_1, in_2, out_1, out_2 = zip(*batch)

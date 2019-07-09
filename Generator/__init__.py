@@ -10,3 +10,6 @@ from .MySiamese import MySiamese
 from .MyTriplet import MyTriplet
 from .AugMySiamese import AugMySiamese
 from .AugMyTriplet import AugMyTriplet
+
+from .MySiameseCombined import MySiameseCombined
+from .AugMySiameseCombined import AugMySiameseCombined
